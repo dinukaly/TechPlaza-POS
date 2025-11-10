@@ -60,8 +60,8 @@ function saveCustomer() {
 
 //update customer
 $(document).on("click", ".btnUpdateCustomer", function () {
-  const index = $(this).data("index");
-  const customer = getCustomerRecord(index);
+  tbl_row = $(this).data("index");
+  const customer = getCustomerRecord(tbl_row);
   $("#id").val(customer.id);
   $("#name").val(customer.name);
   $("#address").val(customer.address);
@@ -98,7 +98,7 @@ function saveUpdatedCustomer() {
   const contact = $("#contact").val();
   const email = $("#email").val();
 
-  updateCustomerRecord(id, name, address, contact, email);
+  updateCustomerRecord(id, name, address, contact, email, tbl_row);
   closeModal();
   loadAllCustomers();
 }
@@ -126,3 +126,5 @@ const loadAllCustomers = () => {
     $("#customerTableBody").append(row);
   });
 };
+
+let tbl_row;
