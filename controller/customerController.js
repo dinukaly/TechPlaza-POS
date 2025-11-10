@@ -103,6 +103,14 @@ function saveUpdatedCustomer() {
   loadAllCustomers();
 }
 
+//delete customer
+$(document).on("click", ".btnDeleteCustomer", function () {
+  tbl_row = $(this).data("index");
+  deleteCustomerRecord(tbl_row);
+  closeModal();
+  loadAllCustomers();
+});
+
 
 //load all customers
 
