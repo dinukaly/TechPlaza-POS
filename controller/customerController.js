@@ -6,6 +6,7 @@ import {
   deleteCustomerRecord,
   getCustomerRecord,
   getAllCustomers,
+  searchCustomerRecord
 } from "../model/customerModel.js";
 
 //add customer
@@ -134,5 +135,28 @@ const loadAllCustomers = () => {
     $("#customerTableBody").append(row);
   });
 };
+
+//search customers
+$("#searchCustomer").on("input", function () {
+  const searchText = $(this).val();
+  const searchResults = searchCustomerRecord(searchText);
+  $("#customerTableBody").empty();
+  searchResults.forEach((customer, index) => {
+    const row = `
+      <tr>
+        <td>${customer.id}</td>
+        <td>${customer.name}</td>
+        <td>${customer.address}</td>
+        <td>${customer.contact}</td>
+        <td>${customer.email}</td>
+        <td>
+          <i class="fa-solid fa-pen-to-square me-2 btnUpdateCustomer" data-index="${index}"></i>
+          <i class="fa-solid fa-trash-can btnDeleteCustomer" data-index="${index}"></i>
+        </td>
+      </tr>
+    `;
+    $("#customerTableBody").append(row);
+  });
+});
 
 let tbl_row;
