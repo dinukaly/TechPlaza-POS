@@ -10,8 +10,8 @@ import {
 import { openModal, closeModal } from "../assets/js/modalManager.js";
 
 //add item
-$('#btnAddItem').on('click', function() {
-    const newItemId = generateItemId();
+$("#btnAddItem").on("click", function () {
+  const newItemId = generateItemId();
   const formHTML = `
     <div class="mb-3">
       <label for="itemId" class="form-label">Item ID</label>
@@ -42,21 +42,24 @@ $('#btnAddItem').on('click', function() {
     </div>`;
 
   openModal("Add Item", formHTML, saveItem);
+  handleImageSelection();
 });
 
 //handle image selection
 
-$('#itemImage').on('change', function(event) {
-  const file = event.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      base64Image = e.target.result;
-      $("#previewImage").attr("src", base64Image).removeClass("d-none");
-    };
-    reader.readAsDataURL(file);
-  }
-});
+const handleImageSelection = () => {
+  $("#itemImage").on("change", function (event) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        base64Image = e.target.result;
+        $("#previewImage").attr("src", base64Image).removeClass("d-none");
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+};
 //save item
 const saveItem = () => {
   const itemId = $("#itemId").val();
