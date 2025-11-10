@@ -58,6 +58,52 @@ function saveCustomer() {
 
 }
 
+//update customer
+$(document).on("click", ".btnUpdateCustomer", function () {
+  const index = $(this).data("index");
+  const customer = getCustomerRecord(index);
+  $("#id").val(customer.id);
+  $("#name").val(customer.name);
+  $("#address").val(customer.address);
+  $("#contact").val(customer.contact);
+  $("#email").val(customer.email);
+  const formHTML = `
+    <div class="mb-3">
+      <label>ID</label>
+      <input type="text" id="id" class="form-control" value="${customer.id}" readonly>
+    </div>
+    <div class="mb-3">
+      <label>Name</label>
+      <input type="text" id="name" class="form-control" placeholder="Enter Name" value="${customer.name}">
+    </div>
+    <div class="mb-3">
+      <label>Address</label>
+      <input type="text" id="address" class="form-control" placeholder="Enter Address" value="${customer.address}">
+    </div>
+    <div class="mb-3">
+      <label>Contact</label>
+      <input type="text" id="contact" class="form-control" placeholder="Enter Contact" value="${customer.contact}">
+    </div>
+    <div class="mb-3">
+      <label>Email</label>
+      <input type="email" id="email" class="form-control" placeholder="Enter Email" value="${customer.email}">
+    </div>`;
+  openModal("Update Customer", formHTML, saveUpdatedCustomer);
+});
+
+function saveUpdatedCustomer() {
+  const id = $("#id").val();
+  const name = $("#name").val();
+  const address = $("#address").val();
+  const contact = $("#contact").val();
+  const email = $("#email").val();
+
+  updateCustomerRecord(id, name, address, contact, email);
+  closeModal();
+  loadAllCustomers();
+}
+
+
 //load all customers
 
 const loadAllCustomers = () => {
@@ -72,8 +118,8 @@ const loadAllCustomers = () => {
         <td>${customer.contact}</td>
         <td>${customer.email}</td>
         <td>
-          <i class="fa-solid fa-pen-to-square me-2"></i>
-          <i class="fa-solid fa-trash-can"></i>
+          <i class="fa-solid fa-pen-to-square me-2 btnUpdateCustomer" data-index="${index}"></i>
+          <i class="fa-solid fa-trash-can btnDeleteCustomer" data-index="${index}"></i>
         </td>
       </tr>
     `;
