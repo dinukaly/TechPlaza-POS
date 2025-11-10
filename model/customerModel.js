@@ -40,7 +40,7 @@ const updateCustomerRecord = (
 };
 
 //delete customer
-const deleteCustomerRecord = (cus_id) => {
+const deleteCustomerRecord = (index) => {
     customer_db.splice(index, 1);
 };
 
@@ -54,6 +54,13 @@ const getAllCustomers = () => {
   return customer_db;
 };
 
+//search customers
+const searchCustomerRecord = (searchText) => {
+  return customer_db.filter((customer) =>
+    customer.name.toLowerCase().includes(searchText.toLowerCase())
+  );
+};
+
 export {
     generateCustomerId,
   addNewCustomerRecord,
@@ -61,4 +68,5 @@ export {
   deleteCustomerRecord,
   getCustomerRecord,
   getAllCustomers,
+  searchCustomerRecord
 };
