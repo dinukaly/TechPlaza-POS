@@ -69,6 +69,11 @@ const saveItem = () => {
   const itemDescription = $("#itemDescription").val();
   const itemImage = base64Image || "";
 
+    //validation
+    if (!itemName || !itemPrice || !itemQuantity || !itemDescription) {
+      alert("Please fill all fields");
+      return;
+    }
   addNewItemRecord(
     itemId,
     itemName,
@@ -77,6 +82,8 @@ const saveItem = () => {
     itemDescription,
     itemImage
   );
+
+
   closeModal();
   loadAllItems();
 };
