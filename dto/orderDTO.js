@@ -48,3 +48,5 @@ class OrderDTO{
         this._totalPrice=totalPrice;
     }
 }
+
+export default OrderDTO;
