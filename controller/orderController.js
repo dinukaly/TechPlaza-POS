@@ -86,7 +86,7 @@ $("#quantity").on("keyup change", function () {
 //add to cart
 $("#btnAddToCart").on("click", function () {
   let itemName = $("#item_Name").val();
-  let quantity = parseInt($("#itemQuantity").val());
+  let quantity = parseInt($("#quantity").val());
   let unitPrice = parseFloat($("#unitPrice").val());
   let totalPrice = quantity * unitPrice;
   console.log(itemName, quantity, unitPrice, totalPrice);
@@ -95,8 +95,8 @@ $("#btnAddToCart").on("click", function () {
   $("#cartTableBody").append(`
     <tr>
       <td>${itemName}</td>
-      <td>${quantity}</td>
       <td>${unitPrice.toFixed(2)}</td>
+      <td>${quantity}</td>
       <td>${totalPrice.toFixed(2)}</td>
     </tr>
   `);
