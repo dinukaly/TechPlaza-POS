@@ -40,4 +40,14 @@ const populateOrderDropdowns = () => {
   console.log("log customers from cus dropdown", customers);
   customers.forEach((c) => console.log("Customer ID:", c.id));
 
+
+  //populate item dropdown
+  const items = getAllItems();
+  $("#item_Name")
+    .empty()
+    .append(`<option disabled selected>Choose...</option>`);
+  items.forEach((i) =>
+    $("#item_Name").append(`<option value="${i.id}">${i.id}</option>`)
+  );
+  console.log("log items from item dropdown", items);
 };
