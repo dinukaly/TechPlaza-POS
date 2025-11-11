@@ -51,3 +51,23 @@ const populateOrderDropdowns = () => {
   );
   console.log("log items from item dropdown", items);
 };
+
+//auto fill customer name
+$("#customerId").on("change", function () {
+  const customers = getAllCustomers();
+  const selectedId = $(this).val();
+  const selectedCustomer = customers.find((c) => c.id === selectedId);
+  if (selectedCustomer) {
+    $("#customerName").val(selectedCustomer.name);
+  }
+});
+
+//auto fill item details
+$("#item_Name").on("change", function () {
+  const items = getAllItems();
+  const selectedId = $(this).val();
+  const selectedItem = items.find((i) => i.id === selectedId);
+  if (selectedItem) {
+    $("#unitPrice").val(selectedItem.price);
+  }
+});
