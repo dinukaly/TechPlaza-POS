@@ -13,6 +13,10 @@ import { getAllItems } from "../model/itemModel.js";
 
 //handle place order btn
 $("#btnPlaceOrder").on("click", function () {
+  //generate order id
+  const orderId = generateOrderId();
+  $("#orderId").val(orderId);
+
   $("#order_header_section").hide();
   $("#orderListContainer").hide();
   $("#placeOrderContainer").show();
@@ -30,7 +34,6 @@ $("#btnBackToList").on("click", function () {
 //populate dropdowns
 const populateOrderDropdowns = () => {
   //populate customer dropdown
-  const customers = getAllCustomers();
   $("#customerId")
     .empty()
     .append(`<option disabled selected>Choose...</option>`);
@@ -42,7 +45,6 @@ const populateOrderDropdowns = () => {
 
 
   //populate item dropdown
-  const items = getAllItems();
   $("#item_Name")
     .empty()
     .append(`<option disabled selected>Choose...</option>`);
@@ -54,7 +56,6 @@ const populateOrderDropdowns = () => {
 
 //auto fill customer name
 $("#customerId").on("change", function () {
-  const customers = getAllCustomers();
   const selectedId = $(this).val();
   const selectedCustomer = customers.find((c) => c.id === selectedId);
   if (selectedCustomer) {
@@ -64,10 +65,13 @@ $("#customerId").on("change", function () {
 
 //auto fill item details
 $("#item_Name").on("change", function () {
-  const items = getAllItems();
   const selectedId = $(this).val();
   const selectedItem = items.find((i) => i.id === selectedId);
   if (selectedItem) {
     $("#unitPrice").val(selectedItem.price);
   }
 });
+
+//getAllCustomers and getAll Items
+let customers = getAllCustomers();
+let items = getAllItems();
