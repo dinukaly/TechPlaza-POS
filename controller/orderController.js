@@ -18,3 +18,9 @@ $("#btnPlaceOrder").on("click", function () {
 
 });
 
+//handle back to list btn
+$("#btnBackToList").on("click", function () {
+  $('#order_header_section').show();
+   $("#placeOrderContainer").hide();
+   $("#orderListContainer").show();
+});
