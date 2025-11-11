@@ -72,6 +72,25 @@ $("#item_Name").on("change", function () {
   }
 });
 
+//add to card
+$("#btnAddToCart").on("click", function () {
+  let itemName = $("#item_Name").val();
+  let quantity = parseInt($("#itemQuantity").val());
+  let unitPrice = parseFloat($("#unitPrice").val());
+  let totalPrice = quantity * unitPrice;
+  console.log(itemName, quantity, unitPrice, totalPrice);
+
+  //append to cart table
+  $("#cartTableBody").append(`
+    <tr>
+      <td>${itemName}</td>
+      <td>${quantity}</td>
+      <td>${unitPrice.toFixed(2)}</td>
+      <td>${totalPrice.toFixed(2)}</td>
+    </tr>
+  `);
+});
+
   //getAllCustomers and getAll Items
 let customers = getAllCustomers();
 let items = getAllItems();
