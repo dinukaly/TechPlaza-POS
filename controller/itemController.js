@@ -146,6 +146,14 @@ const updateItem =()=>{
   closeModal();
   loadAllItems();
 }
+
+//delete item
+$(document).on('click', '.btnDeleteItem',function () {
+    tbl_row = $(this).data('index');
+    deleteItemRecord(tbl_row);
+    closeModal();
+    loadAllItems();
+})
 //load all items
 const loadAllItems =()=>{
     $('#itemTableBody').empty();
