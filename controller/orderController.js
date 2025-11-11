@@ -106,6 +106,15 @@ $("#btnAddToCart").on("click", function () {
   $("#totalCost").val(currentTotal.toFixed(2));
 });
 
+//remove from cart
+$("#cartTableBody").on("click", ".btnRemove", function () {
+  $(this).closest("tr").remove();
+  let currentTotal = parseFloat($("#totalCost").val()) || 0;
+  let removedPrice = parseFloat($(this).closest("tr").find("td:nth-child(4)").text());
+  currentTotal -= removedPrice;
+  $("#totalCost").val(currentTotal.toFixed(2));
+});
+
 //getAllCustomers and getAll Items
 let customers = getAllCustomers();
 let items = getAllItems();
