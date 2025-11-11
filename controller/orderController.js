@@ -49,7 +49,7 @@ const populateOrderDropdowns = () => {
     .empty()
     .append(`<option disabled selected>Choose...</option>`);
   items.forEach((i) =>
-    $("#item_Name").append(`<option value="${i.id}">${i.id}</option>`)
+    $("#item_Name").append(`<option value="${i.name}">${i.name}</option>`)
   );
   console.log("log items from item dropdown", items);
 };
@@ -66,12 +66,12 @@ $("#customerId").on("change", function () {
 //auto fill item details
 $("#item_Name").on("change", function () {
   const selectedId = $(this).val();
-  const selectedItem = items.find((i) => i.id === selectedId);
+  const selectedItem = items.find((i) => i.name === selectedId);
   if (selectedItem) {
     $("#unitPrice").val(selectedItem.price);
   }
 });
 
-//getAllCustomers and getAll Items
+  //getAllCustomers and getAll Items
 let customers = getAllCustomers();
 let items = getAllItems();
