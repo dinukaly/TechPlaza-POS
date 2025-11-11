@@ -26,3 +26,18 @@ $("#btnBackToList").on("click", function () {
   $("#placeOrderContainer").hide();
   $("#orderListContainer").show();
 });
+
+//populate dropdowns
+const populateOrderDropdowns = () => {
+  //populate customer dropdown
+  const customers = getAllCustomers();
+  $("#customerId")
+    .empty()
+    .append(`<option disabled selected>Choose...</option>`);
+  customers.forEach((c) =>
+    $("#customerId").append(`<option value="${c.id}">${c.id}</option>`)
+  );
+  console.log("log customers from cus dropdown", customers);
+  customers.forEach((c) => console.log("Customer ID:", c.id));
+
+};
