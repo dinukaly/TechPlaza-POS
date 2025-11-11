@@ -98,6 +98,10 @@ $("#btnAddToCart").on("click", function () {
       <td>${unitPrice.toFixed(2)}</td>
       <td>${quantity}</td>
       <td>${totalPrice.toFixed(2)}</td>
+      <!-- remove icon -->
+      <td>
+       <i class="fa-solid fa-trash btnRemove text-danger" style="cursor: pointer;"></i>
+      </td>
     </tr>
   `);
   //update total cost
