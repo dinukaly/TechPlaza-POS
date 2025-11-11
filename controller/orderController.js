@@ -43,7 +43,6 @@ const populateOrderDropdowns = () => {
   console.log("log customers from cus dropdown", customers);
   customers.forEach((c) => console.log("Customer ID:", c.id));
 
-
   //populate item dropdown
   $("#item_Name")
     .empty()
@@ -69,10 +68,22 @@ $("#item_Name").on("change", function () {
   const selectedItem = items.find((i) => i.name === selectedId);
   if (selectedItem) {
     $("#unitPrice").val(selectedItem.price);
+    currentItemId = selectedItem.id;
   }
 });
 
-//add to card
+$("#quantity").on("keyup change", function () {
+  const selectedItem = items.find((i) => i.id === currentItemId);
+  const availableQty = selectedItem ? selectedItem.quantity : 0;
+  const enteredQty = parseInt($(this).val()) || 0;
+
+  if (enteredQty > availableQty) {
+    alert("Insufficient stock available.");
+    $(this).val("");
+  }
+});
+
+//add to cart
 $("#btnAddToCart").on("click", function () {
   let itemName = $("#item_Name").val();
   let quantity = parseInt($("#itemQuantity").val());
@@ -91,6 +102,7 @@ $("#btnAddToCart").on("click", function () {
   `);
 });
 
-  //getAllCustomers and getAll Items
+//getAllCustomers and getAll Items
 let customers = getAllCustomers();
 let items = getAllItems();
+let currentItemId;
