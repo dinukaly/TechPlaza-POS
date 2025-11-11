@@ -100,6 +100,10 @@ $("#btnAddToCart").on("click", function () {
       <td>${totalPrice.toFixed(2)}</td>
     </tr>
   `);
+  //update total cost
+  let currentTotal = parseFloat($("#totalCost").val()) || 0;
+  currentTotal += totalPrice;
+  $("#totalCost").val(currentTotal.toFixed(2));
 });
 
 //getAllCustomers and getAll Items
