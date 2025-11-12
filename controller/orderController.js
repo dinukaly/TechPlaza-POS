@@ -157,6 +157,7 @@ $("#btnProceed").on("click", function () {
     //hide place order container
     $("#placeOrderContainer").hide();
     //show order list container
+     $("#order_header_section").show();
     $("#orderListContainer").show();
   }, 1000);
 });
