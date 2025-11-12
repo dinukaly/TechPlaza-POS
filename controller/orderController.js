@@ -187,6 +187,24 @@ function calulateChange(paidAmount, totalPayment) {
   $("#balance").val(change.toFixed(2));
 }
 
+//search orders
+$("#searchOrder").on("input", function () {
+  const searchText = $(this).val();
+  const searchResults = searchOrderRecord(searchText);
+  $("#orderTableBody").empty();
+  searchResults.forEach((order, index) => {
+    const row = `
+      <tr>
+        <td>${order.orderId}</td>
+        <td>${order.orderDate}</td>
+        <td>${order.customerName}</td>
+        <td><button class="btn btn-primary btnView">View</button></td>
+        <td>${order.totalPrice}</td>
+      </tr>
+    `;
+    $("#orderTableBody").append(row);
+  });
+});
 //load order details table
 function loadOrderDetailsTable() {
   //clear table
