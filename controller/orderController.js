@@ -6,6 +6,8 @@ import {
   getOrderRecord,
   getAllOrders,
   searchOrderRecord,
+  addNewOrderDetailRecord,
+  removeOrderDetailRecord,
 } from "../model/orderModel.js";
 
 import { getAllCustomers } from "../model/customerModel.js";
@@ -96,6 +98,9 @@ $("#btnAddToCart").on("click", function () {
   console.log("item id",itemId);
   
 
+  //add order detail record
+  addNewOrderDetailRecord(itemId, itemName, unitPrice, quantity);
+
   //append to cart table
   $("#cartTableBody").append(`
     <tr>
@@ -114,6 +119,9 @@ $("#btnAddToCart").on("click", function () {
   currentTotal += totalPrice;
   $("#totalCost").val(currentTotal.toFixed(2));
 });
+
+
+
 
 //remove from cart
 $("#cartTableBody").on("click", ".btnRemove", function () {
