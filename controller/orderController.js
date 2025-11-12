@@ -137,8 +137,30 @@ $("#cartTableBody").on("click", ".btnRemove", function () {
   removeOrderDetailRecord(index);
 });
 
+//proceed to payment
+$("#btnProceed").on("click", function () {
+  //get order id
+  let orderId = $("#orderId").val();
+  console.log("order id", orderId);
+  let paidAmount = $("#paidAmount").val();
+  let totalPayment = parseFloat($("#totalCost").val());
+  console.log(totalPayment);
+  
+  console.log(paidAmount);
+  //check if paid amount is valid
+  if (paidAmount < totalPayment) {
+    alert("Please enter a valid paid amount.");
+    return;
+  }
+  
+  //calculate change
+  let change = paidAmount - totalPayment;
+  console.log(change);
+  //display change
+  $("#balance").val(change.toFixed(2));
 
 
+});
 
 
 //getAllCustomers and getAll Items
