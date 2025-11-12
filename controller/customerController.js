@@ -43,10 +43,10 @@ function saveCustomer() {
   const address = $("#address").val();
   const contact = $("#contact").val();
   const email = $("#email").val();
+  const isValid = validateFields(name, address, contact, email);
 
   //validation
-  if (!id || !name || !address || !contact || !email) {
-    alert("Please fill all fields");
+  if (!isValid) {
     return;
   }
 
@@ -158,5 +158,75 @@ $("#searchCustomer").on("input", function () {
     $("#customerTableBody").append(row);
   });
 });
+
+//validate fields
+function validateFields(name, address, contact, email) {
+  // Clear any existing errors first
+  clearErrors();
+  
+  let isValid = true;
+  
+  if (name === "" || !isNaN(name)) {
+    isValid = false;
+    $("#name").css("border", "2px solid red");
+    let error = `<div class="error text-danger small mt-1">Name is required and must be valid!</div>`;
+    $("#name").after(error);
+    
+  }
+  if (address === "" || !isNaN(address)) {
+    isValid = false;
+    $("#address").css("border", "2px solid red");
+    let error = `<div class="error text-danger small mt-1">Address is required and must be valid!</div>`;
+    $("#address").after(error);
+   
+  }
+  if (contact === "" || isNaN(contact) || contact.length < 10) {
+    isValid = false;
+    $("#contact").css("border", "2px solid red");
+    let error = `<div class="error text-danger small mt-1">Contact is required and must be a valid phone number (10+ digits)!</div>`;
+    $("#contact").after(error);
+    
+  }
+  if (email === "" || !email.includes("@") || !email.includes(".")) {
+    isValid = false;
+    $("#email").css("border", "2px solid red");
+    let error = `<div class="error text-danger small mt-1">Email is required and must be valid!</div>`;
+    $("#email").after(error);
+    
+  }
+
+  return isValid;
+}
+
+// Function to clear all errors
+function clearErrors() {
+  // Remove all error messages
+  $(".error").remove();
+  // Clear the modal error area
+  $("#formError").empty();
+  // Reset all input borders
+  $("#name, #address, #contact, #email").css("border", "");
+}
+
+// Clean up error message when user focuses on input
+$(document).on("focus", "#name, #address, #contact, #email", function () {
+  $(this).css("border", "");
+  // Remove the specific error message for this field
+  $(this).siblings(".error").remove();
+  // Clear the modal error area if no more field errors
+  if ($(".error").length === 0) {
+    $("#formError").empty();
+  }
+});
+
+// Clean up errors when modal is closed
+$("#modal").on("hidden.bs.modal", function () {
+  clearErrors();
+});
+//load all customers on page load
+$(document).ready(()=>{
+    loadAllCustomers();
+})
+
 
 let tbl_row;
