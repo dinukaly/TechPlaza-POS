@@ -120,10 +120,10 @@ $("#btnAddToCart").on("click", function () {
 
 $("#cartTableBody").on("click", ".btnRemove", function () {
   const row = $(this).closest("tr");
-  const index = row.index(); // get row index (0-based)
+  const index = row.index(); 
   
   // get removed item's total before removing row
-  const removedPrice = parseFloat(row.find("td:nth-child(4)").text().trim());
+  const removedPrice = parseFloat(row.find("td:nth-child(5)").text().trim());
 
   // remove row from table
   row.remove();
