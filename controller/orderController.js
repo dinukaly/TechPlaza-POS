@@ -174,6 +174,8 @@ $("#btnProceed").on("click", function () {
     $("#orderListContainer").show();
   }, 1000);
 
+  //load order details table
+  loadOrderDetailsTable();
  
 });
 
@@ -184,6 +186,28 @@ function calulateChange(paidAmount, totalPayment) {
   //display change
   $("#balance").val(change.toFixed(2));
 }
+
+//load order details table
+function loadOrderDetailsTable() {
+  //clear table
+  $("#orderTableBody").empty();
+  orders = getAllOrders();
+  //populate table
+  orders.forEach((d, index) => {
+    let totalPrice = d.totalPrice || 0;
+    
+    $("#orderTableBody").append(`
+    <tr data-order-index="${index}">
+      <td>${d.orderId}</td>
+      <td>${d.orderDate}</td>
+      <td>${d.customerName}</td>
+       <td><button class="btn btn-primary btnView">View</button></td>
+      <td>${totalPrice.toFixed(2)}</td>
+    </tr>
+  `);
+  });
+}
+
 
 //variables
 let orderId;
