@@ -208,6 +208,44 @@ function loadOrderDetailsTable() {
   });
 }
 
+//load customer purched items details in a modal
+$(document).on('click', '.btnView',function () {
+  // Get the order index from the data attribute
+  const orderIndex = $(this).closest('tr').data('order-index');
+  const orders = getAllOrders();
+  const selectedOrder = orders[orderIndex];
+  
+  if (!selectedOrder) {
+    console.error('Order not found at index:', orderIndex);
+    return;
+  }
+  
+  // Clear modal table
+  $("#orderItemsTableBody").empty();
+  
+  // Get items from the order
+  let purchasedItems = selectedOrder.items ;
+  
+  //populate modal table
+  purchasedItems.forEach((item) => {
+    $("#orderItemsTableBody").append(`
+    <tr>
+      <td>${item.itemName}</td>
+      <td>${item.quantity}</td>
+      <td>${(item.unitPrice|| 0).toFixed(2)}</td>
+      <td>${(item.totalPrice ||0).toFixed(2)}</td>
+    </tr>
+  `);
+  });
+  
+  //set modal title
+  const customerName = selectedOrder.customerName || 'Unknown Customer';
+  $("#orderModalTitle").text(`Items purchased by ${customerName}`);
+  
+  //show modal
+  const orderDetailsModal = new bootstrap.Modal(document.getElementById('orderDetailsModal'));
+  orderDetailsModal.show();
+})
 
 //variables
 let orderId;
