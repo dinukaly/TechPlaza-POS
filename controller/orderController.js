@@ -95,8 +95,7 @@ $("#btnAddToCart").on("click", function () {
 
   //get item id
   let itemId = items.find((i) => i.name === itemName).id;
-  console.log("item id",itemId);
-  
+  console.log("item id", itemId);
 
   //add order detail record
   addNewOrderDetailRecord(itemId, itemName, unitPrice, quantity);
@@ -120,8 +119,8 @@ $("#btnAddToCart").on("click", function () {
 
 $("#cartTableBody").on("click", ".btnRemove", function () {
   const row = $(this).closest("tr");
-  const index = row.index(); 
-  
+  const index = row.index();
+
   // get removed item's total before removing row
   const removedPrice = parseFloat(row.find("td:nth-child(5)").text().trim());
 
@@ -145,23 +144,30 @@ $("#btnProceed").on("click", function () {
   let paidAmount = $("#paidAmount").val();
   let totalPayment = parseFloat($("#totalCost").val());
   console.log(totalPayment);
-  
+
   console.log(paidAmount);
   //check if paid amount is valid
   if (paidAmount < totalPayment) {
     alert("Please enter a valid paid amount.");
     return;
   }
-  
+  calulateChange(paidAmount, totalPayment);
+
+  setTimeout(() => {
+    //hide place order container
+    $("#placeOrderContainer").hide();
+    //show order list container
+    $("#orderListContainer").show();
+  }, 1000);
+});
+
+function calulateChange(paidAmount, totalPayment) {
   //calculate change
   let change = paidAmount - totalPayment;
   console.log(change);
   //display change
   $("#balance").val(change.toFixed(2));
-
-
-});
-
+}
 
 //getAllCustomers and getAll Items
 let customers = getAllCustomers();
