@@ -6,8 +6,6 @@ import {
   getOrderRecord,
   getAllOrders,
   searchOrderRecord,
-  addNewOrderDetailRecord,
-  removeOrderDetailRecord,
 } from "../model/orderModel.js";
 
 import { getAllCustomers } from "../model/customerModel.js";
@@ -16,7 +14,7 @@ import { getAllItems } from "../model/itemModel.js";
 //handle place order btn
 $("#btnPlaceOrder").on("click", function () {
   //generate order id
-  const orderId = generateOrderId();
+  orderId = generateOrderId();
   $("#orderId").val(orderId);
 
   $("#order_header_section").hide();
@@ -57,8 +55,8 @@ const populateOrderDropdowns = () => {
 
 //auto fill customer name
 $("#customerId").on("change", function () {
-  const selectedId = $(this).val();
-  const selectedCustomer = customers.find((c) => c.id === selectedId);
+  customerId = $(this).val();
+  const selectedCustomer = customers.find((c) => c.id === customerId);
   if (selectedCustomer) {
     $("#customerName").val(selectedCustomer.name);
   }
@@ -87,10 +85,10 @@ $("#quantity").on("keyup change", function () {
 
 //add to cart
 $("#btnAddToCart").on("click", function () {
-  let itemName = $("#item_Name").val();
-  let quantity = parseInt($("#quantity").val());
-  let unitPrice = parseFloat($("#unitPrice").val());
-  let totalPrice = quantity * unitPrice;
+  itemName = $("#item_Name").val();
+  quantity = parseInt($("#quantity").val());
+  unitPrice = parseFloat($("#unitPrice").val());
+  totalPrice = quantity * unitPrice;
   console.log(itemName, quantity, unitPrice, totalPrice);
 
   //get item id
@@ -98,7 +96,15 @@ $("#btnAddToCart").on("click", function () {
   console.log("item id", itemId);
 
   //add order detail record
-  addNewOrderDetailRecord(itemId, itemName, unitPrice, quantity);
+  let orderDetail = {
+    itemId,
+    itemName,
+    unitPrice,
+    quantity,
+    totalPrice,
+  };
+  cart.push(orderDetail);
+  console.log("cart", cart);
 
   $("#cartTableBody").append(`
   <tr>
@@ -133,7 +139,7 @@ $("#cartTableBody").on("click", ".btnRemove", function () {
   $("#totalCost").val(currentTotal.toFixed(2));
 
   // remove from array using index
-  removeOrderDetailRecord(index);
+  cart.splice(index, 1);
 });
 
 //proceed to payment
@@ -153,6 +159,7 @@ $("#btnProceed").on("click", function () {
   }
   calulateChange(paidAmount, totalPayment);
 
+   addNewOrderRecord(orderId,orderDate,customerName,cart,totalPrice);
   setTimeout(() => {
     //hide place order container
     $("#placeOrderContainer").hide();
@@ -160,6 +167,8 @@ $("#btnProceed").on("click", function () {
      $("#order_header_section").show();
     $("#orderListContainer").show();
   }, 1000);
+
+ 
 });
 
 function calulateChange(paidAmount, totalPayment) {
@@ -170,7 +179,20 @@ function calulateChange(paidAmount, totalPayment) {
   $("#balance").val(change.toFixed(2));
 }
 
+//variables
+let orderId;
+let orderDate;
+let customerId;
+let customerName;
+let itemName;
+let quantity;
+let unitPrice;
+let totalPrice;
+
 //getAllCustomers and getAll Items
 let customers = getAllCustomers();
 let items = getAllItems();
+let orders = getAllOrders();
 let currentItemId;
+
+let cart = [];
