@@ -232,12 +232,10 @@
               <thead class="table-light">
                 <tr>
                   <th>Order ID</th>
+                  <th>Order Date</th>
                   <th>Customer Name</th>
-                  <th>Item Name</th>
-                  <th>Quantity</th>
-                  <th>Unit Price</th>
-                  <th>Total Price</th>
-                  <th>Actions</th>
+                  <th>Items</th>
+                  <th>Total Amount</th>
                 </tr>
               </thead>
               <tbody id="orderTableBody">
@@ -312,6 +310,7 @@
                   <th>Unit Price</th>
                   <th>Quantity</th>
                   <th>Total</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody id="cartTableBody"></tbody>
@@ -366,6 +365,38 @@
         <button type="button" class="btn btn-primary" id="btnSave">Save</button>
       </div>
     
+    </div>
+  </div>
+</div>
+
+<!-- Order Details Modal -->
+<div class="modal fade" id="orderDetailsModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="orderModalTitle">Order Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead class="table-light">
+              <tr>
+                <th>Item Name</th>
+                <th>Quantity</th>
+                <th>Unit Price</th>
+                <th>Total Price</th>
+              </tr>
+            </thead>
+            <tbody id="orderItemsTableBody">
+              <!-- Order items will be populated here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
     </div>
   </div>
 </div>
