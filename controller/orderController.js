@@ -91,6 +91,11 @@ $("#btnAddToCart").on("click", function () {
   let totalPrice = quantity * unitPrice;
   console.log(itemName, quantity, unitPrice, totalPrice);
 
+  //get item id
+  let itemId = items.find((i) => i.name === itemName).id;
+  console.log("item id",itemId);
+  
+
   //append to cart table
   $("#cartTableBody").append(`
     <tr>
