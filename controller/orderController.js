@@ -88,6 +88,13 @@ $("#btnAddToCart").on("click", function () {
   itemName = $("#item_Name").val();
   quantity = parseInt($("#quantity").val());
   unitPrice = parseFloat($("#unitPrice").val());
+  
+  const isValid = validateCartFields(itemName, quantity, unitPrice);
+  
+  if (!isValid) {
+    return;
+  }
+  
   totalPrice = quantity * unitPrice;
   console.log(itemName, quantity, unitPrice, totalPrice);
 
@@ -151,6 +158,12 @@ $("#btnProceed").on("click", function () {
   let totalPayment = parseFloat($("#totalCost").val());
   console.log(totalPayment);
 
+  const isValid = validatePaymentFields(customerName, orderDate, cart, paidAmount, totalPayment);
+  
+  if (!isValid) {
+    return;
+  }
+  
   console.log(paidAmount);
   //check if paid amount is valid
   if (paidAmount < totalPayment) {
@@ -283,3 +296,97 @@ let currentItemId;
 let cart = [];
 let tbl_row = -1;
 let orders;
+
+//validate cart fields
+function validateCartFields(itemName, quantity, unitPrice) {
+  // Clear any existing errors first
+  clearErrors();
+  
+  let isValid = true;
+  
+  if (itemName === "" || itemName === null || itemName === "Choose...") {
+    isValid = false;
+    $("#item_Name").css("border", "2px solid red");
+    let error = `<div class="error text-danger small mt-1">Please select an item!</div>`;
+    $("#item_Name").after(error);
+  }
+  
+  if (quantity === "" || isNaN(quantity) || parseInt(quantity) <= 0) {
+    isValid = false;
+    $("#quantity").css("border", "2px solid red");
+    let error = `<div class="error text-danger small mt-1">Quantity is required and must be a valid positive number!</div>`;
+    $("#quantity").after(error);
+  }
+  
+  if (unitPrice === "" || isNaN(unitPrice) || parseFloat(unitPrice) <= 0) {
+    isValid = false;
+    $("#unitPrice").css("border", "2px solid red");
+    let error = `<div class="error text-danger small mt-1">Unit Price is required and must be a valid positive number!</div>`;
+    $("#unitPrice").after(error);
+  }
+
+  return isValid;
+}
+
+//validate payment fields
+function validatePaymentFields(customerName, orderDate, cart, paidAmount, totalPayment) {
+  // Clear any existing errors first
+  clearErrors();
+  
+  let isValid = true;
+  
+  if (customerName === "" || customerName === null) {
+    isValid = false;
+    $("#customerName").css("border", "2px solid red");
+    let error = `<div class="error text-danger small mt-1">Customer Name is required!</div>`;
+    $("#customerName").after(error);
+  }
+  
+  if (orderDate === "" || orderDate === null) {
+    isValid = false;
+    $("#orderDate").css("border", "2px solid red");
+    let error = `<div class="error text-danger small mt-1">Order Date is required!</div>`;
+    $("#orderDate").after(error);
+  }
+  
+  if (cart.length === 0) {
+    isValid = false;
+    let error = `<div class="error text-danger small mt-1">Please add at least one item to the cart!</div>`;
+    $("#cartTableBody").after(error);
+  }
+  
+  if (paidAmount === "" || isNaN(paidAmount) || parseFloat(paidAmount) < parseFloat(totalPayment)) {
+    isValid = false;
+    $("#paidAmount").css("border", "2px solid red");
+    let error = `<div class="error text-danger small mt-1">Paid Amount is required and must be greater than or equal to total payment!</div>`;
+    $("#paidAmount").after(error);
+  }
+
+  return isValid;
+}
+
+// Function to clear all errors
+function clearErrors() {
+  // Remove all error messages
+  $(".error").remove();
+  // Clear the modal error area
+  $("#formError").empty();
+  // Reset all input borders
+  $("#item_Name, #quantity, #unitPrice, #customerName, #orderDate, #paidAmount").css("border", "");
+}
+
+// Clean up error message when user focuses on input
+$(document).on("focus", "#item_Name, #quantity, #unitPrice, #customerName, #orderDate, #paidAmount", function () {
+  $(this).css("border", "");
+  // Remove the specific error message for this field
+  $(this).siblings(".error").remove();
+  // Clear the modal error area if no more field errors
+  if ($(".error").length === 0) {
+    $("#formError").empty();
+  }
+});
+
+// Clean up errors when modal is closed
+$("#modal").on("hidden.bs.modal", function () {
+  clearErrors();
+});
