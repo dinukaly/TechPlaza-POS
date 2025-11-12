@@ -101,36 +101,45 @@ $("#btnAddToCart").on("click", function () {
   //add order detail record
   addNewOrderDetailRecord(itemId, itemName, unitPrice, quantity);
 
-  //append to cart table
   $("#cartTableBody").append(`
-    <tr>
-      <td>${itemName}</td>
-      <td>${unitPrice.toFixed(2)}</td>
-      <td>${quantity}</td>
-      <td>${totalPrice.toFixed(2)}</td>
-      <!-- remove icon -->
-      <td>
-       <i class="fa-solid fa-trash btnRemove text-danger" style="cursor: pointer;"></i>
-      </td>
-    </tr>
-  `);
+  <tr>
+    <td style="display:none;">${itemId}</td> <!-- hidden item ID -->
+    <td>${itemName}</td>
+    <td>${unitPrice.toFixed(2)}</td>
+    <td>${quantity}</td>
+    <td>${totalPrice.toFixed(2)}</td>
+    <td><i class="fa-solid fa-trash btnRemove text-danger" style="cursor: pointer;"></i></td>
+  </tr>
+`);
+
   //update total cost
   let currentTotal = parseFloat($("#totalCost").val()) || 0;
   currentTotal += totalPrice;
   $("#totalCost").val(currentTotal.toFixed(2));
 });
 
-
-
-
-//remove from cart
 $("#cartTableBody").on("click", ".btnRemove", function () {
-  $(this).closest("tr").remove();
+  const row = $(this).closest("tr");
+  const index = row.index(); // get row index (0-based)
+  
+  // get removed item's total before removing row
+  const removedPrice = parseFloat(row.find("td:nth-child(4)").text().trim());
+
+  // remove row from table
+  row.remove();
+
+  // update total cost
   let currentTotal = parseFloat($("#totalCost").val()) || 0;
-  let removedPrice = parseFloat($(this).closest("tr").find("td:nth-child(4)").text());
   currentTotal -= removedPrice;
   $("#totalCost").val(currentTotal.toFixed(2));
+
+  // remove from array using index
+  removeOrderDetailRecord(index);
 });
+
+
+
+
 
 //getAllCustomers and getAll Items
 let customers = getAllCustomers();
