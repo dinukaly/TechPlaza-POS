@@ -69,8 +69,8 @@ const saveItem = () => {
   const itemDescription = $("#itemDescription").val();
   const itemImage = base64Image || "";
 
-    //validation
-    if (!itemName || !itemPrice || !itemQuantity || !itemDescription) {
+  //validation
+    if (!itemId || !itemName || !itemPrice || !itemQuantity || !itemDescription || !itemImage) {
       alert("Please fill all fields");
       return;
     }
@@ -154,6 +154,30 @@ $(document).on('click', '.btnDeleteItem',function () {
     closeModal();
     loadAllItems();
 })
+
+//search items
+$("#searchItem").on("input", function () {
+  const searchText = $(this).val();
+  const searchResults = searchItemRecord(searchText);
+  $("#itemTableBody").empty();
+  searchResults.forEach((item, index) => {
+    const row = `
+      <tr>
+        <td>${item.id}</td>
+        <td>${item.name}</td>
+        <td>${item.price}</td>
+        <td>${item.quantity}</td>
+        <td>${item.description}</td>
+        <td><img src="${item.image}" alt="Item Image" style="max-height:50px; border-radius:8px;"></td>
+        <td>
+          <i class="fa-solid fa-pen-to-square me-2 btnUpdateItem" data-index="${index}"></i>
+          <i class="fa-solid fa-trash-can btnDeleteItem" data-index="${index}"></i>
+        </td>
+      </tr>
+    `;
+    $("#itemTableBody").append(row);
+  });
+});
 //load all items
 const loadAllItems =()=>{
     $('#itemTableBody').empty();
@@ -174,5 +198,6 @@ const loadAllItems =()=>{
         $('#itemTableBody').append(row);
     })
 };
+
+let tbl_row = -1;
 let base64Image = "";
-let tbl_row;
