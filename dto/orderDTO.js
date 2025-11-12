@@ -1,10 +1,9 @@
 class OrderDTO{
-    constructor(orderId, orderDate, customerName, itemName,quantity, totalPrice){
+    constructor(orderId, orderDate, customerName, items, totalPrice){
         this._orderId=orderId;
         this._orderDate=orderDate;
         this._customerName = customerName,
-        this._itemName = itemName,
-        this._quantity = quantity,
+        this._items = items,
         this._totalPrice = totalPrice
     }
 
@@ -18,11 +17,8 @@ class OrderDTO{
     get customerName(){
         return this._customerName;
     }
-    get itemName(){
-        return this._itemName;
-    }
-    get quantity(){
-        return this._quantity;
+    get items(){
+        return this._items;
     }
     get totalPrice(){
         return this._totalPrice;
@@ -36,16 +32,13 @@ class OrderDTO{
         this._orderDate=orderDate;
     }
     set customerName(customerName){
-        this._customerName=customerName;
+        this._customerName= customerName;
     }
-    set itemName(itemName){
-        this._itemName=itemName;
-    }
-    set quantity(quantity){
-        this._quantity=quantity;
+    set items(items){
+        this._items= items;
     }
     set totalPrice(totalPrice){
-        this._totalPrice=totalPrice;
+        this._totalPrice = totalPrice;
     }
 }
 
