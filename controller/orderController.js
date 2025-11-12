@@ -147,7 +147,7 @@ $("#btnProceed").on("click", function () {
   //get order id
   let orderId = $("#orderId").val();
   console.log("order id", orderId);
-  let paidAmount = $("#paidAmount").val();
+  let paidAmount = parseFloat($("#paidAmount").val());
   let totalPayment = parseFloat($("#totalCost").val());
   console.log(totalPayment);
 
@@ -159,7 +159,13 @@ $("#btnProceed").on("click", function () {
   }
   calulateChange(paidAmount, totalPayment);
 
-   addNewOrderRecord(orderId,orderDate,customerName,cart,totalPrice);
+  // Get order date and customer name from form
+  orderDate = $("#orderDate").val();
+  customerName = $("#customerName").val();
+  
+  // Add the order record with the cart data
+  addNewOrderRecord(orderId, orderDate, customerName, cart, totalPayment);
+  
   setTimeout(() => {
     //hide place order container
     $("#placeOrderContainer").hide();
@@ -192,7 +198,8 @@ let totalPrice;
 //getAllCustomers and getAll Items
 let customers = getAllCustomers();
 let items = getAllItems();
-let orders = getAllOrders();
 let currentItemId;
 
 let cart = [];
+let tbl_row = -1;
+let orders;
