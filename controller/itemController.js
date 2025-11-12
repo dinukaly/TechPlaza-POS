@@ -69,11 +69,13 @@ const saveItem = () => {
   const itemDescription = $("#itemDescription").val();
   const itemImage = base64Image || "";
 
+  const isValid = validateFields(itemName, itemPrice, itemQuantity, itemDescription, itemImage);
+
   //validation
-    if (!itemId || !itemName || !itemPrice || !itemQuantity || !itemDescription || !itemImage) {
-      alert("Please fill all fields");
-      return;
-    }
+  if (!isValid) {
+    return;
+  }
+  
   addNewItemRecord(
     itemId,
     itemName,
@@ -82,7 +84,6 @@ const saveItem = () => {
     itemDescription,
     itemImage
   );
-
 
   closeModal();
   loadAllItems();
@@ -126,12 +127,18 @@ $(document).on("click", ".btnUpdateItem", function () {
 });
 
 const updateItem =()=>{
-    const itemId = $("#itemId").val();
+  const itemId = $("#itemId").val();
   const itemName = $("#itemName").val();
   const itemPrice = $("#itemPrice").val();
   const itemQuantity = $("#itemQuantity").val();
   const itemDescription = $("#itemDescription").val();
   const itemImage = base64Image || "";
+
+  const isValid = validateFields(itemName, itemPrice, itemQuantity, itemDescription, itemImage);
+
+  if (!isValid) {
+    return;
+  }
 
   updateItemRecord(
     itemId,
@@ -198,6 +205,81 @@ const loadAllItems =()=>{
         $('#itemTableBody').append(row);
     })
 };
+
+//validate fields
+function validateFields(itemName, itemPrice, itemQuantity, itemDescription, itemImage) {
+  // Clear any existing errors first
+  clearErrors();
+  
+  let isValid = true;
+  
+  if (itemName === "" || !isNaN(itemName)) {
+    isValid = false;
+    $("#itemName").css("border", "2px solid red");
+    let error = `<div class="error text-danger small mt-1">Item Name is required and must be valid!</div>`;
+    $("#itemName").after(error);
+  }
+  
+  if (itemPrice === "" || isNaN(itemPrice) || parseFloat(itemPrice) <= 0) {
+    isValid = false;
+    $("#itemPrice").css("border", "2px solid red");
+    let error = `<div class="error text-danger small mt-1">Item Price is required and must be a valid positive number!</div>`;
+    $("#itemPrice").after(error);
+  }
+  
+  if (itemQuantity === "" || isNaN(itemQuantity) || parseInt(itemQuantity) < 0) {
+    isValid = false;
+    $("#itemQuantity").css("border", "2px solid red");
+    let error = `<div class="error text-danger small mt-1">Item Quantity is required and must be a valid non-negative number!</div>`;
+    $("#itemQuantity").after(error);
+  }
+  
+  if (itemDescription === "" || !isNaN(itemDescription)) {
+    isValid = false;
+    $("#itemDescription").css("border", "2px solid red");
+    let error = `<div class="error text-danger small mt-1">Item Description is required and must be valid!</div>`;
+    $("#itemDescription").after(error);
+  }
+  
+  if (itemImage === "") {
+    isValid = false;
+    $("#itemImage").css("border", "2px solid red");
+    let error = `<div class="error text-danger small mt-1">Item Image is required!</div>`;
+    $("#itemImage").after(error);
+  }
+
+  return isValid;
+}
+
+// Function to clear all errors
+function clearErrors() {
+  // Remove all error messages
+  $(".error").remove();
+  // Clear the modal error area
+  $("#formError").empty();
+  // Reset all input borders
+  $("#itemName, #itemPrice, #itemQuantity, #itemDescription, #itemImage").css("border", "");
+}
+
+// Clean up error message when user focuses on input
+$(document).on("focus", "#itemName, #itemPrice, #itemQuantity, #itemDescription, #itemImage", function () {
+  $(this).css("border", "");
+  // Remove the specific error message for this field
+  $(this).siblings(".error").remove();
+  // Clear the modal error area if no more field errors
+  if ($(".error").length === 0) {
+    $("#formError").empty();
+  }
+});
+
+// Clean up errors when modal is closed
+$("#modal").on("hidden.bs.modal", function () {
+  clearErrors();
+});
+
+$(document).ready(()=>{
+    loadAllItems();
+})
 
 let tbl_row = -1;
 let base64Image = "";
