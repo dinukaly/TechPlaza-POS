@@ -15,6 +15,11 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
+    <!-- Sweet Alert CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"
+    />
     <link rel="stylesheet" href="../assets/css/styles.css" />
   </head>
 
@@ -89,13 +94,264 @@
 
         <!-- Dashboard Section -->
         <section id="dashboard_section" class="col py-3">
-          <div class="container">
-            <div class="row">
-              <div class="col">
-                <h1 class="fw-bold">Dashboard</h1>
+
+            <!-- Header / Navigation Bar -->
+            <header class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+              <!-- Dashboard Title -->
+              <h1 class="h3 mb-0 text-dark" style="font-weight: 700;">Dashboard</h1>
+
+              <!-- Search and Profile Icons -->
+              <div class="d-flex align-items-center">
+
+                <!-- Search Bar -->
+                <div class="search-bar me-3 d-none d-md-block">
+                  <div class="input-group">
+                        <span class="input-group-text border-0">
+                            <!-- Inlined SVG for Search Icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#6c757d" viewBox="0 0 16 16">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                            </svg>
+                        </span>
+                    <input type="text" class="form-control border-0" placeholder="Search..." aria-label="Search">
+                  </div>
+                </div>
+
+                <!-- Notification Bell -->
+                <a href="#" class="text-decoration-none icon-bell me-3">
+                  <!-- Inlined SVG for Bell Icon -->
+                 <i class="fa-regular fa-bell"></i>
+                </a>
+
+                <!-- Profile Picture -->
+                <img src="https://placehold.co/40x40/6c757d/white?text=User" alt="Profile Picture" class="rounded-circle profile-pic">
+              </div>
+            </header>
+
+            <!-- Main Content Grid -->
+            <div class="row g-4">
+
+              <!-- Left Column (Stats and Graph) -->
+              <div class="col-lg-8">
+
+                <!-- Statistics Cards Row -->
+                <div class="row g-4 mb-4">
+                  <!-- Total Repairs Card -->
+                  <div class="col-md-6">
+                    <div class="card border-0 shadow-sm rounded-4 p-3 h-100">
+                      <div class="d-flex align-items-center">
+                        <div class="stat-card-icon bg-orange-light me-3">
+                          <!-- Inlined SVG for Tools Icon -->
+                        <i class="fa-regular fa-calendar"></i>
+                        </div>
+                        <div>
+                          <h2 class="h4 mb-0" style="font-weight: 700;">34503</h2>
+                          <p class="text-muted mb-0">Total Repairs</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Total Customers Card -->
+                  <div class="col-md-6">
+                    <div class="card border-0 shadow-sm rounded-4 p-3 h-100">
+                      <div class="d-flex align-items-center">
+                        <div class="stat-card-icon bg-green-light me-3">
+                          <!-- Inlined SVG for People Icon -->
+                          <i class="fa-solid fa-people-group"></i>
+                        </div>
+                        <div>
+                          <h2 class="h4 mb-0" style="font-weight: 700;">2456</h2>
+                          <p class="text-muted mb-0">Total Customers</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Total Items Card -->
+                  <div class="col-md-6">
+                    <div class="card border-0 shadow-sm rounded-4 p-3 h-100">
+                      <div class="d-flex align-items-center">
+                        <div class="stat-card-icon bg-blue-light me-3">
+                          <!-- Inlined SVG for Items/Home Icon -->
+                         <i class="fa-solid fa-house"></i>
+                        </div>
+                        <div>
+                          <h2 class="h4 mb-0" style="font-weight: 700;">1545</h2>
+                          <p class="text-muted mb-0">Total Items</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Total Revenue Card -->
+                  <div class="col-md-6">
+                    <div class="card border-0 shadow-sm rounded-4 p-3 h-100">
+                      <div class="d-flex align-items-center">
+                        <div class="stat-card-icon bg-purple-light me-3">
+                          <!-- Inlined SVG for Dollar Icon -->
+                         <i class="fa-solid fa-dollar-sign"></i>
+                        </div>
+                        <div>
+                          <h2 class="h4 mb-0" style="font-weight: 700;">$ 340 00</h2>
+                          <p class="text-muted mb-0">Total Revenue</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Customer Growth Chart Card -->
+                <div class="card border-0 shadow-sm rounded-4 p-4">
+                  <div class="mb-3">
+                    <h5 class="card-title mb-0" style="font-weight: 600;">Customer Growth</h5>
+                    <p class="text-muted small mb-0">AUG - NOV 2025</p>
+                  </div>
+                  <div class="chart-container">
+                    <!-- Static SVG Line Chart -->
+                    <svg viewBox="0 0 1100 350" preserveAspectRatio="xMidYMid meet">
+                      <g>
+                        <!-- The purple line path -->
+                        <path class="chart-line" d="M 100 220 C 175 185, 200 150, 250 150 C 300 150, 350 120, 400 120 C 450 120, 500 180, 550 180 C 600 180, 650 250, 700 250 C 750 250, 800 280, 850 280 C 900 280, 950 200, 1000 170">
+                        </path>
+
+                        <!-- Dots on the line -->
+                        <g class="chart-dots">
+                          <circle cx="100" cy="220" r="5"></circle>
+                          <circle cx="250" cy="150" r="5"></circle>
+                          <circle cx="400" cy="120" r="5"></circle>
+                          <circle cx="550" cy="180" r="5"></circle>
+                          <circle cx="700" cy="250" r="5"></circle>
+                          <circle cx="850" cy="280" r="5"></circle>
+                          <circle cx="1000" cy="170" r="5"></circle>
+                        </g>
+                      </g>
+
+                      <!-- X-Axis Labels -->
+                      <g class="x-axis-labels" transform="translate(0, 330)">
+                        <text x="100">May</text>
+                        <text x="250">Jun</text>
+                        <text x="400">Jul</text>
+                        <text x="550">Aug</text>
+                        <text x="700">Sep</text>
+                        <text x="850">Oct</text>
+                        <text x="1000">Nov</text>
+                      </g>
+                    </svg>
+                  </div>
+                  <p class="text-success small mt-3 mb-0" style="font-weight: 500;">
+                    Accelerated by #% than previous month
+                  </p>
+                </div>
+
+              </div>
+
+              <!-- Right Column (Calendar and Stats) -->
+              <div class="col-lg-4">
+                <div class="d-flex flex-column gap-4">
+
+                  <!-- Calendar Card -->
+                  <div class="card border-0 shadow-sm rounded-4 p-3">
+                    <h6 class="text-center mb-3" style="font-weight: 600;">November 2025</h6>
+                    <table class="table table-borderless text-center calendar-table">
+                      <thead>
+                      <tr>
+                        <th>SAN</th>
+                        <th>MON</th>
+                        <th>TUE</th>
+                        <th>WED</th>
+                        <th>THU</th>
+                        <th>FRI</th>
+                        <th>SAT</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr>
+                        <td class="text-muted">29</td>
+                        <td class="text-muted">30</td>
+                        <td class="text-muted">31</td>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                      </tr>
+                      <tr>
+                        <td>5</td>
+                        <td>6</td>
+                        <td>7</td>
+                        <td>8</td>
+                        <td>9</td>
+                        <td>10</td>
+                        <td>11</td>
+                      </tr>
+                      <tr>
+                        <td>12</td>
+                        <td>13</td>
+                        <td>14</td>
+                        <td><span class="date-active">15</span></td>
+                        <td>16</td>
+                        <td>17</td>
+                        <td>18</td>
+                      </tr>
+                      <tr>
+                        <td>19</td>
+                        <td>20</td>
+                        <td>21</td>
+                        <td>22</td>
+                        <td>23</td>
+                        <td>24</td>
+                        <td>25</td>
+                      </tr>
+                      <tr>
+                        <td>26</td>
+                        <td>27</td>
+                        <td>28</td>
+                        <td>29</td>
+                        <td>30</td>
+                        <td class="text-muted">1</td>
+                        <td class="text-muted">2</td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <!-- Current Statistics Card -->
+                  <div class="card border-0 shadow-sm rounded-4 p-3">
+                    <h6 class="mb-0" style="font-weight: 600;">Current Statistics</h6>
+                    <p class="text-muted small">This Month</p>
+
+                    <!-- Donut Chart -->
+                    <div class="donut-chart-container">
+                      <div class="donut-chart"></div>
+                      <div class="donut-chart-center">
+                        <span class="percentage">70%</span>
+                        <span class="label">Profitable</span>
+                      </div>
+                    </div>
+
+                    <p class="text-center text-muted small" style="font-weight: 500;">Total Revenue $5, 2400.00</p>
+
+                    <!-- Legend -->
+                    <div class="mt-2">
+                      <div class="d-flex justify-content-between align-items-center mb-2">
+                        <div>
+                          <span class="legend-dot dot-profit"></span>
+                          <span class="legend-text">Total Profit</span>
+                        </div>
+                        <span class="legend-value">64,545</span>
+                      </div>
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                          <span class="legend-dot dot-expense"></span>
+                          <span class="legend-text">Total Expences</span>
+                        </div>
+                        <span class="legend-value">80,519</span>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
               </div>
             </div>
-          </div>
         </section>
 
         <!-- Customer Section -->
@@ -408,6 +664,8 @@
       integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
       crossorigin="anonymous"
     ></script>
+    <!-- Sweet Alert JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../assets/js/modalManager.js" type="module"></script>
     <script src="../controller/customerController.js" type="module"></script>
     <script src="../controller/itemController.js" type="module"></script>
