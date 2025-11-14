@@ -33,3 +33,175 @@
       font-weight: 600;
       letter-spacing: 0.5px;
     }
+
+     .rounded-4 {
+            border-radius: 1rem !important;
+        }
+
+        /* --- Top Navigation --- */
+        .search-bar .form-control {
+            border-left: 0;
+            box-shadow: none;
+        }
+        .search-bar .input-group-text {
+            background-color: white;
+            border-right: 0;
+        }
+        .search-bar .input-group {
+            border: 1px solid #dee2e6;
+            border-radius: 2rem; /* .rounded-pill */
+            overflow: hidden;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+        }
+        .icon-bell {
+            font-size: 1.25rem;
+            color: #6c757d;
+        }
+
+        /* --- Stat Cards --- */
+        .stat-card-icon {
+            width: 50px;
+            height: 50px;
+            display: grid;
+            place-items: center;
+            border-radius: 0.75rem; /* rounded-3 */
+        }
+        .stat-card-icon svg {
+            width: 24px;
+            height: 24px;
+        }
+        
+        /* Icon Colors */
+        .bg-orange-light {
+            background-color: #fff0e1;
+            color: #ff8c1a;
+        }
+        .bg-green-light {
+            background-color: #e6f8f0;
+            color: #00b371;
+        }
+        .bg-blue-light {
+            background-color: #e7f0ff;
+            color: #4d8fff;
+        }
+        .bg-purple-light {
+            background-color: #f3e7ff;
+            color: #8e4dff;
+        }
+
+        /* --- Growth Chart Card --- */
+        .chart-container {
+            width: 100%;
+            overflow: hidden;
+        }
+        .chart-line {
+            fill: none;
+            stroke: #8e4dff;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .chart-dots {
+            fill: #8e4dff;
+            stroke: white;
+            stroke-width: 2;
+        }
+        .x-axis-labels text {
+            font-size: 12px;
+            fill: #6c757d;
+            text-anchor: middle;
+        }
+
+        /* --- Calendar Card --- */
+        .calendar-table {
+            table-layout: fixed;
+        }
+        .calendar-table thead th {
+            font-weight: 500;
+            font-size: 0.8rem;
+            color: #adb5bd; /* Lighter text for day names */
+            padding-bottom: 0.75rem;
+        }
+        .calendar-table td {
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 0.25rem;
+            height: 38px;
+            vertical-align: middle;
+        }
+        .date-active {
+            background-color: #ff8c1a;
+            color: white;
+            border-radius: 50%;
+            width: 34px;
+            height: 34px;
+            display: inline-grid;
+            place-items: center;
+            line-height: 1;
+        }
+
+        /* --- Statistics Donut Chart --- */
+        .donut-chart-container {
+            position: relative;
+            display: grid;
+            place-items: center;
+            margin: 1.5rem 0;
+        }
+        .donut-chart {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            /* 70% purple, 30% grey */
+            background: conic-gradient(#8e4dff 0% 70%, #f1f3f5 70% 100%);
+        }
+        .donut-chart-center {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background: white;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            text-align: center;
+            line-height: 1.2;
+        }
+        .donut-chart-center .percentage {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #8e4dff;
+            display: block;
+        }
+        .donut-chart-center .label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #6c757d;
+        }
+
+        /* Legend */
+        .legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        .dot-profit {
+            background-color: #8e4dff;
+        }
+        .dot-expense {
+            background-color: #f1f3f5;
+        }
+        .legend-text {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #6c757d;
+        }
+        .legend-value {
+            font-weight: 600;
+            color: #212529;
+        }
