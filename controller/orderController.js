@@ -78,7 +78,14 @@ $("#quantity").on("keyup change", function () {
   const enteredQty = parseInt($(this).val()) || 0;
 
   if (enteredQty > availableQty) {
-    alert("Insufficient stock available.");
+    Swal.fire({
+      title: 'Insufficient Stock!',
+      text: 'The requested quantity exceeds available stock.',
+      icon: 'warning',
+      confirmButtonText: 'OK',
+      timer: 3000,
+      timerProgressBar: true
+    });
     $(this).val("");
   }
 });
@@ -167,7 +174,14 @@ $("#btnProceed").on("click", function () {
   console.log(paidAmount);
   //check if paid amount is valid
   if (paidAmount < totalPayment) {
-    alert("Please enter a valid paid amount.");
+    Swal.fire({
+      title: 'Invalid Payment!',
+      text: 'Please enter a valid paid amount that covers the total payment.',
+      icon: 'error',
+      confirmButtonText: 'OK',
+      timer: 3000,
+      timerProgressBar: true
+    });
     return;
   }
   calulateChange(paidAmount, totalPayment);
@@ -189,6 +203,16 @@ $("#btnProceed").on("click", function () {
 
   //load order details table
   loadOrderDetailsTable();
+
+  // Sweet Alert for successful order placement
+  Swal.fire({
+    title: 'Order Placed!',
+    text: `Order ${orderId} has been placed successfully.`,
+    icon: 'success',
+    confirmButtonText: 'OK',
+    timer: 4000,
+    timerProgressBar: true
+  });
  
 });
 

@@ -87,6 +87,16 @@ const saveItem = () => {
 
   closeModal();
   loadAllItems();
+
+  // Sweet Alert for successful item addition
+  Swal.fire({
+    title: 'Success!',
+    text: 'Item has been added successfully.',
+    icon: 'success',
+    confirmButtonText: 'OK',
+    timer: 3000,
+    timerProgressBar: true
+  });
 };
 
 //update item
@@ -152,14 +162,49 @@ const updateItem =()=>{
 
   closeModal();
   loadAllItems();
+
+  // Sweet Alert for successful item update
+  Swal.fire({
+    title: 'Updated!',
+    text: 'Item has been updated successfully.',
+    icon: 'success',
+    confirmButtonText: 'OK',
+    timer: 3000,
+    timerProgressBar: true
+  });
 }
 
 //delete item
 $(document).on('click', '.btnDeleteItem',function () {
     tbl_row = $(this).data('index');
-    deleteItemRecord(tbl_row);
-    closeModal();
-    loadAllItems();
+    
+    // Sweet Alert confirmation for item deletion
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteItemRecord(tbl_row);
+        closeModal();
+        loadAllItems();
+        
+        // Sweet Alert for successful deletion
+        Swal.fire({
+          title: 'Deleted!',
+          text: 'Item has been deleted successfully.',
+          icon: 'success',
+          confirmButtonText: 'OK',
+          timer: 3000,
+          timerProgressBar: true
+        });
+      }
+    });
 })
 
 //search items

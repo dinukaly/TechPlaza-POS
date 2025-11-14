@@ -56,6 +56,15 @@ function saveCustomer() {
     closeModal();
     loadAllCustomers();
 
+    // Sweet Alert for successful customer addition
+    Swal.fire({
+      title: 'Success!',
+      text: 'Customer has been added successfully.',
+      icon: 'success',
+      confirmButtonText: 'OK',
+      timer: 3000,
+      timerProgressBar: true
+    });
 
 }
 
@@ -102,14 +111,49 @@ function saveUpdatedCustomer() {
   updateCustomerRecord(id, name, address, contact, email, tbl_row);
   closeModal();
   loadAllCustomers();
+
+  // Sweet Alert for successful customer update
+  Swal.fire({
+    title: 'Updated!',
+    text: 'Customer has been updated successfully.',
+    icon: 'success',
+    confirmButtonText: 'OK',
+    timer: 3000,
+    timerProgressBar: true
+  });
 }
 
 //delete customer
 $(document).on("click", ".btnDeleteCustomer", function () {
   tbl_row = $(this).data("index");
-  deleteCustomerRecord(tbl_row);
-  closeModal();
-  loadAllCustomers();
+  
+  // Sweet Alert confirmation for customer deletion
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6',
+    confirmButtonText: 'Yes, delete it!',
+    cancelButtonText: 'Cancel'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      deleteCustomerRecord(tbl_row);
+      closeModal();
+      loadAllCustomers();
+      
+      // Sweet Alert for successful deletion
+      Swal.fire({
+        title: 'Deleted!',
+        text: 'Customer has been deleted successfully.',
+        icon: 'success',
+        confirmButtonText: 'OK',
+        timer: 3000,
+        timerProgressBar: true
+      });
+    }
+  });
 });
 
 
