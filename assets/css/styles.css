@@ -205,3 +205,29 @@
             font-weight: 600;
             color: #212529;
         }
+
+        /* --- Loading Spinner for Proceed Button --- */
+        #btnProceed {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        #btnProceed:disabled {
+            opacity: 0.8;
+            cursor: not-allowed;
+        }
+        
+        #proceedSpinner {
+            margin-left: 8px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        #proceedBtnText {
+            display: inline-block;
+            transition: all 0.3s ease;
+        }

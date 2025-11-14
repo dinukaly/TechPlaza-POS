@@ -590,7 +590,12 @@
           <input type="text" id="balance" class="form-control" readonly>
         </div>
         <div class="col-md-3 d-flex align-items-end">
-          <button id="btnProceed" class="btn btn-success w-100">Proceed</button>
+          <button id="btnProceed" class="btn btn-success w-100">
+            <span id="proceedBtnText">Proceed</span>
+            <div id="proceedSpinner" class="spinner-border spinner-border-sm d-none" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </button>
         </div>
       </div>
     </div>

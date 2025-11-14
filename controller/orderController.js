@@ -158,6 +158,11 @@ $("#cartTableBody").on("click", ".btnRemove", function () {
 
 //proceed to payment
 $("#btnProceed").on("click", function () {
+  // Show loading spinner and disable button
+  $("#proceedBtnText").text("Processing...");
+  $("#proceedSpinner").removeClass("d-none");
+  $("#btnProceed").prop("disabled", true);
+  
   //get order id
   let orderId = $("#orderId").val();
   console.log("order id", orderId);
@@ -168,6 +173,10 @@ $("#btnProceed").on("click", function () {
   const isValid = validatePaymentFields(customerName, orderDate, cart, paidAmount, totalPayment);
   
   if (!isValid) {
+    // Hide loading spinner and re-enable button if validation fails
+    $("#proceedBtnText").text("Proceed");
+    $("#proceedSpinner").addClass("d-none");
+    $("#btnProceed").prop("disabled", false);
     return;
   }
   
@@ -182,6 +191,10 @@ $("#btnProceed").on("click", function () {
       timer: 3000,
       timerProgressBar: true
     });
+    // Hide loading spinner and re-enable button if payment is invalid
+    $("#proceedBtnText").text("Proceed");
+    $("#proceedSpinner").addClass("d-none");
+    $("#btnProceed").prop("disabled", false);
     return;
   }
   calulateChange(paidAmount, totalPayment);
@@ -199,6 +212,11 @@ $("#btnProceed").on("click", function () {
     //show order list container
      $("#order_header_section").show();
     $("#orderListContainer").show();
+    
+    // Hide loading spinner and re-enable button after processing is complete
+    $("#proceedBtnText").text("Proceed");
+    $("#proceedSpinner").addClass("d-none");
+    $("#btnProceed").prop("disabled", false);
   }, 1000);
 
   //load order details table
