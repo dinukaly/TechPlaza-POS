@@ -24,6 +24,14 @@
   </head>
 
   <body>
+    <!-- Mobile Menu Toggle Button -->
+    <button class="mobile-menu-toggle d-lg-none" id="mobileMenuToggle">
+      <i class="fas fa-bars"></i>
+    </button>
+    
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay d-lg-none" id="sidebarOverlay"></div>
+    
     <div class="container-fluid">
       <div class="row flex-nowrap">
         <!-- Sidebar -->
@@ -101,10 +109,10 @@
               <h1 class="h3 mb-0 text-dark" style="font-weight: 700;">Dashboard</h1>
 
               <!-- Search and Profile Icons -->
-              <div class="d-flex align-items-center">
+              <div class="d-flex align-items-center flex-wrap gap-2">
 
                 <!-- Search Bar -->
-                <div class="search-bar me-3 d-none d-md-block">
+                <div class="search-bar me-md-3">
                   <div class="input-group">
                         <span class="input-group-text border-0">
                             <!-- Inlined SVG for Search Icon -->
@@ -117,7 +125,7 @@
                 </div>
 
                 <!-- Notification Bell -->
-                <a href="#" class="text-decoration-none icon-bell me-3">
+                <a href="#" class="text-decoration-none icon-bell me-md-3">
                   <!-- Inlined SVG for Bell Icon -->
                  <i class="fa-regular fa-bell"></i>
                 </a>
@@ -382,22 +390,24 @@
             <!-- table -->
             <div class="row">
               <div class="col">
-                <table class="table table-hover">
-                  <thead>
-                    <tr>
-                      <th scope="col">Customer ID</th>
-                      <th scope="col">Name</th>
-                      <th scope="col">Address</th>
-                      <th scope="col">Contact</th>
-                      <th scope="col">Email</th>
-                      <th scope="col">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody id="customerTableBody">
-                    <!-- Customer rows will be dynamically added here -->
-                    
-                  </tbody>
-                </table>
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">Customer ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Contact</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="customerTableBody">
+                      <!-- Customer rows will be dynamically added here -->
+                      
+                    </tbody>
+                  </table>
+                </div>
               </div>
           </div>
         </section>
@@ -430,22 +440,24 @@
             <!-- table -->
             <div class="row">
               <div class="col">
-                <table class="table table-hover">
-                  <thead>
-                    <tr>
-                      <th scope="col">Item ID</th>
-                      <th scope="col">Name</th>
-                      <th scope="col">Price</th>
-                      <th scope="col">Quantity</th>
-                      <th scope="col">Description</th>
-                      <th scope="col">Image</th>
-                      <th scope="col">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody id="itemTableBody">
-                    <!-- Item rows will be dynamically added here -->
-                  </tbody>
-                </table>
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">Item ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Image</th>
+                        <th scope="col">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="itemTableBody">
+                      <!-- Item rows will be dynamically added here -->
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
@@ -697,24 +709,28 @@
           hideAll();
           $("#dashboard_section").show();
           updateActiveTab($(this));
+          closeMobileMenu();
         });
 
         $("#customer_tab").click(function () {
           hideAll();
           $("#customer_section").show();
           updateActiveTab($(this));
+          closeMobileMenu();
         });
 
         $("#item_tab").click(function () {
           hideAll();
           $("#item_section").show();
           updateActiveTab($(this));
+          closeMobileMenu();
         });
 
         $("#order_tab").click(function () {
           hideAll();
           $("#order_section").show();
           updateActiveTab($(this));
+          closeMobileMenu();
         });
 
         // Function to update active tab styling
@@ -724,6 +740,50 @@
           $("#menu .nav-link").removeClass("active");
           clickedTab.find(".nav-link").addClass("active");
         };
+        
+        // Mobile menu functionality
+        const mobileMenuToggle = $("#mobileMenuToggle");
+        const sidebarOverlay = $("#sidebarOverlay");
+        const sidebar = $(".sidebar");
+        
+        // Toggle mobile menu
+        function toggleMobileMenu() {
+          sidebar.toggleClass("show");
+          sidebarOverlay.toggleClass("show");
+          $("body").toggleClass("overflow-hidden");
+        }
+        
+        // Close mobile menu
+        function closeMobileMenu() {
+          sidebar.removeClass("show");
+          sidebarOverlay.removeClass("show");
+          $("body").removeClass("overflow-hidden");
+        }
+        
+        // Event listeners for mobile menu
+        mobileMenuToggle.on("click", toggleMobileMenu);
+        sidebarOverlay.on("click", closeMobileMenu);
+        
+        // Close menu when clicking on nav links (mobile)
+        $(".nav-link").on("click", function() {
+          if ($(window).width() <= 768) {
+            closeMobileMenu();
+          }
+        });
+        
+        // Handle window resize
+        $(window).on("resize", function() {
+          if ($(window).width() > 768) {
+            closeMobileMenu();
+          }
+        });
+        
+        // Prevent body scroll when mobile menu is open
+        $(document).on("touchmove", function(e) {
+          if (sidebar.hasClass("show")) {
+            e.preventDefault();
+          }
+        });
       });
     </script>
   </body>
