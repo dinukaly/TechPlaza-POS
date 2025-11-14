@@ -1,5 +1,6 @@
-import { OrderDTO } from "../dto/orderDTO.js";
-import { order_db } from "../db/DB.js";
+import OrderDTO from "../dto/orderDTO.js";
+import { order_db, order_details_db } from "../db/DB.js";
+
 
 
 //generate order ID
@@ -17,10 +18,10 @@ function generateOrderId() {
 }
 
 //add order
-const addNewOrderRecord = (order_id, order_date, customer_name, item_name, quantity, total_price) => {
-  console.log(order_id, order_date, customer_name, item_name, quantity, total_price);
+const addNewOrderRecord = (order_id, order_date, customer_name, items, total_price) => {
+  console.log("from order modal: ",order_id, order_date, customer_name, items, total_price);
 
-  let order = new OrderDTO(order_id, order_date, customer_name, item_name, quantity, total_price);
+  let order = new OrderDTO(order_id, order_date, customer_name, items, total_price);
   console.log(order);
 
   order_db.push(order);
