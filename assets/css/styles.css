@@ -1,15 +1,106 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
-
+:root {
+    --primary-purple: #4B00B3; /* Main purple from the design */
+    --light-gray: #f8f9fa;
+    --text-dark: #333;
+    --text-muted-light: #6c757d;
+    --input-border: #ced4da;
+}
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
+
+
  body {
       font-family: 'Poppins', sans-serif;
       background-color: #f8f9fa;
     }
+
+    .vh-100 {
+    min-height: 100vh;
+}
+
+/* --- Left Panel --- */
+.purple-panel {
+    background-color: var(--primary-purple);
+}
+
+.logo {
+    font-weight: 700;
+    font-size: 1.5rem; /* 24px */
+}
+
+/* --- Right Panel (Login Form) --- */
+.login-form {
+    width: 100%;
+    max-width: 400px;
+    padding: 1.5rem;
+}
+
+.form-title {
+    color: var(--primary-purple);
+    font-weight: 700;
+    font-size: 1.1rem; /* 18px */
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.form-label {
+    font-weight: 600;
+    color: var(--text-dark);
+    font-size: 0.9rem; /* 14px */
+}
+
+.form-control {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+    border: 1px solid var(--input-border);
+    border-radius: 0.5rem; /* 8px - slightly more rounded */
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-control:focus {
+    border-color: var(--primary-purple);
+    box-shadow: 0 0 0 0.25rem rgba(75, 0, 179, 0.25);
+}
+
+.forgot-link {
+    color: var(--text-muted-light);
+    font-size: 0.8rem; /* 13px */
+    text-decoration: none;
+}
+
+.forgot-link:hover {
+    color: var(--primary-purple);
+    text-decoration: underline;
+}
+
+.btn-login {
+    background-color: var(--primary-purple);
+    color: white;
+    padding: 0.75rem;
+    font-weight: 600;
+    font-size: 1rem;
+    border: none;
+    border-radius: 0.5rem; /* 8px */
+    transition: background-color 0.2s ease;
+}
+
+.btn-login:hover {
+    background-color: #3a008a; /* A slightly darker purple */
+    color: white;
+}
+
+/* On small screens, the form takes up more space */
+@media (max-width: 767.98px) {
+    .login-form {
+        max-width: 100%;
+        padding: 1.5rem;
+    }
+}
 
     /* Sidebar styling */
     .sidebar {
