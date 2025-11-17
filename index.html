@@ -33,7 +33,7 @@
     <div class="sidebar-overlay d-lg-none" id="sidebarOverlay"></div>
 
     <!-- //login page -->
-     <div class="container-fluid vh-100" id="loginPage">
+     <div class="container-fluid vh-100" id="loginPage" style="display: none;">
         <div class="row g-0 h-100">
             
             <div class="col-md-5 d-none d-md-flex flex-column justify-content-center align-items-center purple-panel">
@@ -131,7 +131,7 @@
                 <li><a class="dropdown-item" href="#">Settings</a></li>
                 <li><a class="dropdown-item" href="#">Profile</a></li>
                 <li><hr class="dropdown-divider" /></li>
-                <li><a class="dropdown-item" href="#">Sign out</a></li>
+                <li><a class="dropdown-item" href="#" id="btnSignOut">Sign out</a></li>
               </ul>
             </div>
           </div>
@@ -726,8 +726,11 @@
     <script src="../controller/orderController.js" type="module"></script>
 
     <script>
-      $('#loginPage').hide();
-
+  // Function to hide all sections
+        const hideAll = () => {
+          // $('#mainContent').hide();
+          $("section").hide();
+        };
       // Get username and password from login form
 
          $('#btnLogin').click(function(event) {
@@ -735,7 +738,7 @@
         const username = $('#username').val();
         const password = $('#password').val();
         console.log(username, password);
-        // Proceed with login logic (replace with actual authentication)
+
         if (username === "admin" && password === "1234") {
            localStorage.setItem('isLoggedIn', 'true');
         $('#mainContent').show();
@@ -755,8 +758,16 @@
           showConfirmButton: false,
           timer: 1500,
         });
-        // Show main content after successful login
+        $("#mainContent").show();
+         $('#username').val('');
+        $('#password').val('');
        
+      });
+
+      $('#btnSignOut').click(function(){
+        localStorage.setItem('isLoggedIn', 'false');
+        // hideAll();
+        $('#loginPage').show();
       });
       
    
@@ -774,17 +785,7 @@
           $("#mainContent").hide();
           $('#loginPage').show();
         }
-        // Function to hide all sections
-        const hideAll = () => {
-          $('#mainContent').hide();
-          // $("section").hide();
-        };
-
-        // Initialize - hide all sections except dashboard
-        hideAll();
-        // $("#dashboard_section").show();
-        $('#loginPage').show();
-
+      
         // Add click event handlers
         $("#home_tab").click(function () {
           hideAll();
