@@ -31,8 +31,45 @@
     
     <!-- Sidebar Overlay -->
     <div class="sidebar-overlay d-lg-none" id="sidebarOverlay"></div>
+
+    <!-- //login page -->
+     <div class="container-fluid vh-100" id="loginPage">
+        <div class="row g-0 h-100">
+            
+            <div class="col-md-5 d-none d-md-flex flex-column justify-content-center align-items-center purple-panel">
+                <div class="text-white p-5" style="max-width: 450px;">
+                    <h3 class="logo mb-3">TechPlaza</h3>
+                    <h1 class="display-4 fw-bold mb-4">Where Sales Come Alive Everyday</h1>
+                    <p class="lead">Manage. Track. Grow your business with ease and confidence from anywhere, anytime.</p>
+                </div>
+            </div>
+
+            <div class="col-md-7 d-flex justify-content-center align-items-center bg-white">
+                <div class="login-form">
+                    <h2 class="form-title mb-4">LOGIN TO CONTINUE</h2>
+                    
+                    <form>
+                        <div class="mb-3">
+                            <label for="username" class="form-label">User Name</label>
+                            <input type="text" class="form-control" id="username" placeholder="Enter your user name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" placeholder="Enter your password">
+                        </div>
+                        <div class="text-end mb-3">
+                            <a href="#" class="forgot-link">Forgot Password?</a>
+                        </div>
+                        <button type="submit" class="btn btn-login w-100" id="btnLogin">Login</button>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
     
-    <div class="container-fluid">
+    <div class="container-fluid" id="mainContent" style="display: none;">
       <div class="row flex-nowrap">
         <!-- Sidebar -->
         <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 sidebar">
@@ -689,20 +726,64 @@
     <script src="../controller/orderController.js" type="module"></script>
 
     <script>
+      $('#loginPage').hide();
+
+      // Get username and password from login form
+
+         $('#btnLogin').click(function(event) {
+          event.preventDefault();
+        const username = $('#username').val();
+        const password = $('#password').val();
+        console.log(username, password);
+        // Proceed with login logic (replace with actual authentication)
+        if (username === "admin" && password === "1234") {
+           localStorage.setItem('isLoggedIn', 'true');
+        $('#mainContent').show();
+          $('#loginPage').hide();
+          // Successful login
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Invalid username or password!",
+          });
+          return;
+        }
+        Swal.fire({
+          icon: "success",
+          title: "Login Successful!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        // Show main content after successful login
+       
+      });
+      
+   
 
       $('#btnAddItem').click(function() {
         console.log('clicked');
         
       });
       $(document).ready(function () {
+        if(localStorage.getItem('isLoggedIn') === 'true'){
+          console.log('logged in');
+          $("#mainContent").show();
+          $('#loginPage').hide();
+        }else{
+          $("#mainContent").hide();
+          $('#loginPage').show();
+        }
         // Function to hide all sections
         const hideAll = () => {
-          $("section").hide();
+          $('#mainContent').hide();
+          // $("section").hide();
         };
 
         // Initialize - hide all sections except dashboard
         hideAll();
-        $("#dashboard_section").show();
+        // $("#dashboard_section").show();
+        $('#loginPage').show();
 
         // Add click event handlers
         $("#home_tab").click(function () {
