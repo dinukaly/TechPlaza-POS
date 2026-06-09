@@ -165,12 +165,18 @@ $("#btnProceed").on("click", function () {
   
   //get order id
   let orderId = $("#orderId").val();
-  console.log("order id", orderId);
+  const currentOrderDate = $("#orderDate").val();
+  const currentCustomerName = $("#customerName").val();
   let paidAmount = parseFloat($("#paidAmount").val());
   let totalPayment = parseFloat($("#totalCost").val());
-  console.log(totalPayment);
 
-  const isValid = validatePaymentFields(customerName, orderDate, cart, paidAmount, totalPayment);
+  const isValid = validatePaymentFields(
+    currentCustomerName,
+    currentOrderDate,
+    cart,
+    paidAmount,
+    totalPayment
+  );
   
   if (!isValid) {
     // Hide loading spinner and re-enable button if validation fails
@@ -198,37 +204,19 @@ $("#btnProceed").on("click", function () {
     return;
   }
   calulateChange(paidAmount, totalPayment);
-
-  // Get order date and customer name from form
-  orderDate = $("#orderDate").val();
-  customerName = $("#customerName").val();
   
   // Add the order record with the cart data
-  addNewOrderRecord(orderId, orderDate, customerName, cart, totalPayment);
+  addNewOrderRecord(orderId, currentOrderDate, currentCustomerName, cart, totalPayment);
   window.refreshDashboardMetrics?.();
   
   setTimeout(() => {
-    //hide place order container
+    resetOrderForm();
     $("#placeOrderContainer").hide();
-    //show order list container
-     $("#order_header_section").show();
+    $("#order_header_section").show();
     $("#orderListContainer").show();
-    
-    // Hide loading spinner and re-enable button after processing is complete
     $("#proceedBtnText").text("Proceed");
     $("#proceedSpinner").addClass("d-none");
     $("#btnProceed").prop("disabled", false);
-    cart = [];
-    currentItemId = "";
-    $("#cartTableBody").empty();
-    $("#totalCost").val("");
-    $("#paidAmount").val("");
-    $("#balance").val("");
-    $("#customerId").prop("selectedIndex", 0);
-    $("#customerName").val("");
-    $("#item_Name").prop("selectedIndex", 0);
-    $("#unitPrice").val("");
-    $("#quantity").val("");
   }, 1000);
 
   //load order details table
@@ -249,7 +237,6 @@ $("#btnProceed").on("click", function () {
 function calulateChange(paidAmount, totalPayment) {
   //calculate change
   let change = paidAmount - totalPayment;
-  console.log(change);
   //display change
   $("#balance").val(change.toFixed(2));
 }
@@ -261,7 +248,7 @@ $("#searchOrder").on("input", function () {
   $("#orderTableBody").empty();
   searchResults.forEach((order, index) => {
     const row = `
-      <tr>
+      <tr data-order-id="${order.orderId}">
         <td>${order.orderId}</td>
         <td>${order.orderDate}</td>
         <td>${order.customerName}</td>
@@ -282,7 +269,7 @@ function loadOrderDetailsTable() {
     let totalPrice = d.totalPrice || 0;
     
     $("#orderTableBody").append(`
-    <tr data-order-index="${index}">
+    <tr data-order-id="${d.orderId}">
       <td>${d.orderId}</td>
       <td>${d.orderDate}</td>
       <td>${d.customerName}</td>
@@ -295,13 +282,12 @@ function loadOrderDetailsTable() {
 
 //load customer purched items details in a modal
 $(document).on('click', '.btnView',function () {
-  // Get the order index from the data attribute
-  const orderIndex = $(this).closest('tr').data('order-index');
+  const orderId = $(this).closest('tr').data('order-id');
   const orders = getAllOrders();
-  const selectedOrder = orders[orderIndex];
+  const selectedOrder = orders.find((order) => order.orderId === orderId);
   
   if (!selectedOrder) {
-    console.error('Order not found at index:', orderIndex);
+    console.error('Order not found for order ID:', orderId);
     return;
   }
   
@@ -331,6 +317,20 @@ $(document).on('click', '.btnView',function () {
   const orderDetailsModal = new bootstrap.Modal(document.getElementById('orderDetailsModal'));
   orderDetailsModal.show();
 })
+
+function resetOrderForm() {
+  cart = [];
+  currentItemId = "";
+  $("#cartTableBody").empty();
+  $("#totalCost").val("");
+  $("#paidAmount").val("");
+  $("#balance").val("");
+  $("#customerId").prop("selectedIndex", 0);
+  $("#customerName").val("");
+  $("#item_Name").prop("selectedIndex", 0);
+  $("#unitPrice").val("");
+  $("#quantity").val("");
+}
 
 //variables
 let orderId;

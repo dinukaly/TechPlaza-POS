@@ -32,16 +32,13 @@ const updateOrderRecord = (
   order_id,
   order_date,
   customer_name,
-  item_name,
-  quantity,
-  description,
-  image,
+  items,
+  total_price,
   tbl_row
 ) => {
-  let item = new ItemDTO(item_id, name, price, quantity, description, image);
-  let order = new OrderDTO(order_id, order_date, customer_name, item_name, quantity, total_price);
+  let order = new OrderDTO(order_id, order_date, customer_name, items, total_price);
   order_db[tbl_row] = order;
-    return true;
+  return true;
 };
 
 //delete order
