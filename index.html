@@ -20,7 +20,7 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"
     />
-    <link rel="stylesheet" href="../assets/css/styles.css" />
+    <link rel="stylesheet" href="./assets/css/styles.css" />
   </head>
 
   <body>
@@ -720,153 +720,10 @@
     ></script>
     <!-- Sweet Alert JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="../assets/js/modalManager.js" type="module"></script>
-    <script src="../controller/customerController.js" type="module"></script>
-    <script src="../controller/itemController.js" type="module"></script>
-    <script src="../controller/orderController.js" type="module"></script>
-
-    <script>
-  // Function to hide all sections
-        const hideAll = () => {
-          // $('#mainContent').hide();
-          $("section").hide();
-        };
-      // Get username and password from login form
-
-         $('#btnLogin').click(function(event) {
-          event.preventDefault();
-        const username = $('#username').val();
-        const password = $('#password').val();
-        console.log(username, password);
-
-        if (username === "admin" && password === "1234") {
-           localStorage.setItem('isLoggedIn', 'true');
-        $('#mainContent').show();
-          $('#loginPage').hide();
-          // Successful login
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Invalid username or password!",
-          });
-          return;
-        }
-        Swal.fire({
-          icon: "success",
-          title: "Login Successful!",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        $("#mainContent").show();
-         $('#username').val('');
-        $('#password').val('');
-       
-      });
-
-      $('#btnSignOut').click(function(){
-        localStorage.setItem('isLoggedIn', 'false');
-        // hideAll();
-        $('#loginPage').show();
-      });
-      
-   
-
-      $('#btnAddItem').click(function() {
-        console.log('clicked');
-        
-      });
-      $(document).ready(function () {
-        if(localStorage.getItem('isLoggedIn') === 'true'){
-          console.log('logged in');
-          $("#mainContent").show();
-          $('#loginPage').hide();
-        }else{
-          $("#mainContent").hide();
-          $('#loginPage').show();
-        }
-      
-        // Add click event handlers
-        $("#home_tab").click(function () {
-          hideAll();
-          $("#dashboard_section").show();
-          updateActiveTab($(this));
-          closeMobileMenu();
-        });
-
-        $("#customer_tab").click(function () {
-          hideAll();
-          $("#customer_section").show();
-          updateActiveTab($(this));
-          closeMobileMenu();
-        });
-
-        $("#item_tab").click(function () {
-          hideAll();
-          $("#item_section").show();
-          updateActiveTab($(this));
-          closeMobileMenu();
-        });
-
-        $("#order_tab").click(function () {
-          hideAll();
-          $("#order_section").show();
-          updateActiveTab($(this));
-          closeMobileMenu();
-        });
-
-        // Function to update active tab styling
-        const updateActiveTab = (clickedTab) => {
-          console.log(clickedTab);
-
-          $("#menu .nav-link").removeClass("active");
-          clickedTab.find(".nav-link").addClass("active");
-        };
-        
-        // Mobile menu functionality
-        const mobileMenuToggle = $("#mobileMenuToggle");
-        const sidebarOverlay = $("#sidebarOverlay");
-        const sidebar = $(".sidebar");
-        
-        // Toggle mobile menu
-        function toggleMobileMenu() {
-          sidebar.toggleClass("show");
-          sidebarOverlay.toggleClass("show");
-          $("body").toggleClass("overflow-hidden");
-        }
-        
-        // Close mobile menu
-        function closeMobileMenu() {
-          sidebar.removeClass("show");
-          sidebarOverlay.removeClass("show");
-          $("body").removeClass("overflow-hidden");
-        }
-        
-        // Event listeners for mobile menu
-        mobileMenuToggle.on("click", toggleMobileMenu);
-        sidebarOverlay.on("click", closeMobileMenu);
-        
-        // Close menu when clicking on nav links (mobile)
-        $(".nav-link").on("click", function() {
-          if ($(window).width() <= 768) {
-            closeMobileMenu();
-          }
-        });
-        
-        // Handle window resize
-        $(window).on("resize", function() {
-          if ($(window).width() > 768) {
-            closeMobileMenu();
-          }
-        });
-        
-        // Prevent body scroll when mobile menu is open
-        $(document).on("touchmove", function(e) {
-          if (sidebar.hasClass("show")) {
-            e.preventDefault();
-          }
-        });
-      });
-    </script>
+    <script src="./assets/js/modalManager.js" type="module"></script>
+    <script src="./controller/customerController.js" type="module"></script>
+    <script src="./controller/itemController.js" type="module"></script>
+    <script src="./controller/orderController.js" type="module"></script>
+    <script src="./assets/js/app.js" type="module"></script>
   </body>
 </html>
