@@ -87,6 +87,7 @@ const saveItem = () => {
 
   closeModal();
   loadAllItems();
+  window.refreshDashboardMetrics?.();
 
   // Sweet Alert for successful item addition
   Swal.fire({
@@ -162,6 +163,7 @@ const updateItem =()=>{
 
   closeModal();
   loadAllItems();
+  window.refreshDashboardMetrics?.();
 
   // Sweet Alert for successful item update
   Swal.fire({
@@ -193,6 +195,7 @@ $(document).on('click', '.btnDeleteItem',function () {
         deleteItemRecord(tbl_row);
         closeModal();
         loadAllItems();
+        window.refreshDashboardMetrics?.();
         
         // Sweet Alert for successful deletion
         Swal.fire({

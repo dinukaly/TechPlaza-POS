@@ -55,6 +55,7 @@ function saveCustomer() {
     
     closeModal();
     loadAllCustomers();
+    window.refreshDashboardMetrics?.();
 
     // Sweet Alert for successful customer addition
     Swal.fire({
@@ -111,6 +112,7 @@ function saveUpdatedCustomer() {
   updateCustomerRecord(id, name, address, contact, email, tbl_row);
   closeModal();
   loadAllCustomers();
+  window.refreshDashboardMetrics?.();
 
   // Sweet Alert for successful customer update
   Swal.fire({
@@ -142,6 +144,7 @@ $(document).on("click", ".btnDeleteCustomer", function () {
       deleteCustomerRecord(tbl_row);
       closeModal();
       loadAllCustomers();
+      window.refreshDashboardMetrics?.();
       
       // Sweet Alert for successful deletion
       Swal.fire({

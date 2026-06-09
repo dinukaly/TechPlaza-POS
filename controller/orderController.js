@@ -205,6 +205,7 @@ $("#btnProceed").on("click", function () {
   
   // Add the order record with the cart data
   addNewOrderRecord(orderId, orderDate, customerName, cart, totalPayment);
+  window.refreshDashboardMetrics?.();
   
   setTimeout(() => {
     //hide place order container
@@ -217,6 +218,17 @@ $("#btnProceed").on("click", function () {
     $("#proceedBtnText").text("Proceed");
     $("#proceedSpinner").addClass("d-none");
     $("#btnProceed").prop("disabled", false);
+    cart = [];
+    currentItemId = "";
+    $("#cartTableBody").empty();
+    $("#totalCost").val("");
+    $("#paidAmount").val("");
+    $("#balance").val("");
+    $("#customerId").prop("selectedIndex", 0);
+    $("#customerName").val("");
+    $("#item_Name").prop("selectedIndex", 0);
+    $("#unitPrice").val("");
+    $("#quantity").val("");
   }, 1000);
 
   //load order details table
