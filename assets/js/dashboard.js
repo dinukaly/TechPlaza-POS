@@ -23,12 +23,21 @@ const refreshDashboardMetrics = () => {
     0
   );
 
-  $("#dashboardPeriod").text(formatMonthLabel());
+  const currentPeriod = formatMonthLabel();
+
+  $("#dashboardPeriod").text(currentPeriod);
+  $("#calendarPeriod").text(currentPeriod);
+  $("#dashboardStatsPeriod").text(currentPeriod);
   $("#totalOrdersCount").text(orders.length.toLocaleString("en-US"));
   $("#totalCustomersCount").text(customers.length.toLocaleString("en-US"));
   $("#totalItemsCount").text(items.length.toLocaleString("en-US"));
   $("#totalRevenueCount").text(formatCurrency(totalRevenue));
   $("#dashboardRevenueSummary").text(`Total Revenue ${formatCurrency(totalRevenue)}`);
+  $("#dashboardTrendNote").text(
+    orders.length > 0
+      ? `Sales are tracked from ${currentPeriod}`
+      : "Sales are tracked from the current in-memory dataset"
+  );
 };
 
 $(function () {
