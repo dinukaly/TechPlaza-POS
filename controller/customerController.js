@@ -11,7 +11,7 @@ import {
 
 //add customer
 $("#btnAddCustomer").on("click", function () {
-    const newCustomerId = generateCustomerId();
+  const newCustomerId = generateCustomerId();
   const formHTML = `
     <div class="mb-3">
       <label>ID</label>
@@ -50,12 +50,11 @@ function saveCustomer() {
     return;
   }
 
-    addNewCustomerRecord(id, name, address, contact, email);
-    console.log(id,name,address,contact,email);
-    
-    closeModal();
-    loadAllCustomers();
-    window.refreshDashboardMetrics?.();
+  addNewCustomerRecord(id, name, address, contact, email);
+
+  closeModal();
+  loadAllCustomers();
+  window.refreshDashboardMetrics?.();
 
     // Sweet Alert for successful customer addition
     Swal.fire({
@@ -71,13 +70,14 @@ function saveCustomer() {
 
 //update customer
 $(document).on("click", ".btnUpdateCustomer", function () {
-  tbl_row = $(this).data("index");
+  const customerId = $(this).data("id");
+  tbl_row = getAllCustomers().findIndex((customer) => customer.id === customerId);
   const customer = getCustomerRecord(tbl_row);
-  $("#id").val(customer.id);
-  $("#name").val(customer.name);
-  $("#address").val(customer.address);
-  $("#contact").val(customer.contact);
-  $("#email").val(customer.email);
+
+  if (!customer) {
+    return;
+  }
+
   const formHTML = `
     <div class="mb-3">
       <label>ID</label>
@@ -127,7 +127,8 @@ function saveUpdatedCustomer() {
 
 //delete customer
 $(document).on("click", ".btnDeleteCustomer", function () {
-  tbl_row = $(this).data("index");
+  const customerId = $(this).data("id");
+  tbl_row = getAllCustomers().findIndex((customer) => customer.id === customerId);
   
   // Sweet Alert confirmation for customer deletion
   Swal.fire({
@@ -167,15 +168,15 @@ const loadAllCustomers = () => {
   const customers = getAllCustomers();
   customers.forEach((customer, index) => {
     const row = `
-      <tr>
+    <tr>
         <td>${customer.id}</td>
         <td>${customer.name}</td>
         <td>${customer.address}</td>
         <td>${customer.contact}</td>
         <td>${customer.email}</td>
         <td>
-          <i class="fa-solid fa-pen-to-square me-2 btnUpdateCustomer" data-index="${index}"></i>
-          <i class="fa-solid fa-trash-can btnDeleteCustomer" data-index="${index}"></i>
+          <i class="fa-solid fa-pen-to-square me-2 btnUpdateCustomer" data-id="${customer.id}"></i>
+          <i class="fa-solid fa-trash-can btnDeleteCustomer" data-id="${customer.id}"></i>
         </td>
       </tr>
     `;
@@ -190,15 +191,15 @@ $("#searchCustomer").on("input", function () {
   $("#customerTableBody").empty();
   searchResults.forEach((customer, index) => {
     const row = `
-      <tr>
+    <tr>
         <td>${customer.id}</td>
         <td>${customer.name}</td>
         <td>${customer.address}</td>
         <td>${customer.contact}</td>
         <td>${customer.email}</td>
         <td>
-          <i class="fa-solid fa-pen-to-square me-2 btnUpdateCustomer" data-index="${index}"></i>
-          <i class="fa-solid fa-trash-can btnDeleteCustomer" data-index="${index}"></i>
+          <i class="fa-solid fa-pen-to-square me-2 btnUpdateCustomer" data-id="${customer.id}"></i>
+          <i class="fa-solid fa-trash-can btnDeleteCustomer" data-id="${customer.id}"></i>
         </td>
       </tr>
     `;

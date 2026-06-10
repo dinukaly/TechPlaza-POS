@@ -9,11 +9,12 @@ import {
 } from "../model/orderModel.js";
 
 import { getAllCustomers } from "../model/customerModel.js";
-import { getAllItems } from "../model/itemModel.js";
+import { getAllItems, decreaseItemQuantity } from "../model/itemModel.js";
 
 //handle place order btn
 $("#btnPlaceOrder").on("click", function () {
   //generate order id
+  refreshOrderLookups();
   orderId = generateOrderId();
   $("#orderId").val(orderId);
 
@@ -33,6 +34,8 @@ $("#btnBackToList").on("click", function () {
 
 //populate dropdowns
 const populateOrderDropdowns = () => {
+  refreshOrderLookups();
+
   //populate customer dropdown
   $("#customerId")
     .empty()
@@ -40,8 +43,6 @@ const populateOrderDropdowns = () => {
   customers.forEach((c) =>
     $("#customerId").append(`<option value="${c.id}">${c.id}</option>`)
   );
-  console.log("log customers from cus dropdown", customers);
-  customers.forEach((c) => console.log("Customer ID:", c.id));
 
   //populate item dropdown
   $("#item_Name")
@@ -50,7 +51,11 @@ const populateOrderDropdowns = () => {
   items.forEach((i) =>
     $("#item_Name").append(`<option value="${i.name}">${i.name}</option>`)
   );
-  console.log("log items from item dropdown", items);
+};
+
+const refreshOrderLookups = () => {
+  customers = getAllCustomers();
+  items = getAllItems();
 };
 
 //auto fill customer name
@@ -103,11 +108,9 @@ $("#btnAddToCart").on("click", function () {
   }
   
   totalPrice = quantity * unitPrice;
-  console.log(itemName, quantity, unitPrice, totalPrice);
 
   //get item id
   let itemId = items.find((i) => i.name === itemName).id;
-  console.log("item id", itemId);
 
   //add order detail record
   let orderDetail = {
@@ -118,7 +121,6 @@ $("#btnAddToCart").on("click", function () {
     totalPrice,
   };
   cart.push(orderDetail);
-  console.log("cart", cart);
 
   $("#cartTableBody").append(`
   <tr>
@@ -185,8 +187,7 @@ $("#btnProceed").on("click", function () {
     $("#btnProceed").prop("disabled", false);
     return;
   }
-  
-  console.log(paidAmount);
+
   //check if paid amount is valid
   if (paidAmount < totalPayment) {
     Swal.fire({
@@ -207,7 +208,9 @@ $("#btnProceed").on("click", function () {
   
   // Add the order record with the cart data
   addNewOrderRecord(orderId, currentOrderDate, currentCustomerName, cart, totalPayment);
+  cart.forEach((entry) => decreaseItemQuantity(entry.itemId, entry.quantity));
   window.refreshDashboardMetrics?.();
+  window.refreshItemTable?.();
   
   setTimeout(() => {
     resetOrderForm();

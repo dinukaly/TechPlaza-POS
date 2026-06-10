@@ -6,11 +6,13 @@ import {
   getItemRecord,
   getAllItems,
   searchItemRecord,
+  decreaseItemQuantity,
 } from "../model/itemModel.js";
 import { openModal, closeModal } from "../assets/js/modalManager.js";
 
 //add item
 $("#btnAddItem").on("click", function () {
+  base64Image = "";
   const newItemId = generateItemId();
   const formHTML = `
     <div class="mb-3">
@@ -102,8 +104,15 @@ const saveItem = () => {
 
 //update item
 $(document).on("click", ".btnUpdateItem", function () {
-  tbl_row = $(this).data("index");
+  const itemId = $(this).data("id");
+  tbl_row = getAllItems().findIndex((item) => item.id === itemId);
   const item = getItemRecord(tbl_row);
+
+  if (!item) {
+    return;
+  }
+
+  base64Image = item.image || "";
   const formHTML = `
     <div class="mb-3">
       <label for="itemId" class="form-label">Item ID</label>
@@ -178,7 +187,8 @@ const updateItem =()=>{
 
 //delete item
 $(document).on('click', '.btnDeleteItem',function () {
-    tbl_row = $(this).data('index');
+    const itemId = $(this).data('id');
+    tbl_row = getAllItems().findIndex((item) => item.id === itemId);
     
     // Sweet Alert confirmation for item deletion
     Swal.fire({
@@ -217,7 +227,7 @@ $("#searchItem").on("input", function () {
   $("#itemTableBody").empty();
   searchResults.forEach((item, index) => {
     const row = `
-      <tr>
+    <tr>
         <td>${item.id}</td>
         <td>${item.name}</td>
         <td>${item.price}</td>
@@ -225,8 +235,8 @@ $("#searchItem").on("input", function () {
         <td>${item.description}</td>
         <td><img src="${item.image}" alt="Item Image" style="max-height:50px; border-radius:8px;"></td>
         <td>
-          <i class="fa-solid fa-pen-to-square me-2 btnUpdateItem" data-index="${index}"></i>
-          <i class="fa-solid fa-trash-can btnDeleteItem" data-index="${index}"></i>
+          <i class="fa-solid fa-pen-to-square me-2 btnUpdateItem" data-id="${item.id}"></i>
+          <i class="fa-solid fa-trash-can btnDeleteItem" data-id="${item.id}"></i>
         </td>
       </tr>
     `;
@@ -246,8 +256,8 @@ const loadAllItems =()=>{
         <td>${item.description}</td>
         <td><img src="${item.image}" alt="Item Image" style="max-height:50px; border-radius:8px;"></td>
         <td>
-          <i class="fa-solid fa-pen-to-square me-2 btnUpdateItem" data-index="${index}"></i>
-          <i class="fa-solid fa-trash-can btnDeleteItem" data-index="${index}"></i>
+          <i class="fa-solid fa-pen-to-square me-2 btnUpdateItem" data-id="${item.id}"></i>
+          <i class="fa-solid fa-trash-can btnDeleteItem" data-id="${item.id}"></i>
         </td>
       </tr>`;
         $('#itemTableBody').append(row);
@@ -331,3 +341,6 @@ $(document).ready(()=>{
 
 let tbl_row = -1;
 let base64Image = "";
+
+window.refreshItemTable = loadAllItems;
+window.decreaseItemQuantity = decreaseItemQuantity;

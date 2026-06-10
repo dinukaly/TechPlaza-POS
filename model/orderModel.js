@@ -1,30 +1,20 @@
 import OrderDTO from "../dto/orderDTO.js";
-import { order_db, order_details_db } from "../db/DB.js";
+import { order_db, order_details_db, persistDatabases } from "../db/DB.js";
+import { generateNextId } from "../assets/js/storageService.js";
 
 
 
 //generate order ID
 function generateOrderId() {
-  if (order_db.length === 0) return "O001";
-
-  // Get last order ID
-  const lastId = order_db[order_db.length - 1].orderId;
-
-  // Extract the numeric part and increment
-  const num = parseInt(lastId.substring(1)) + 1;
-
-  // Pad with zeros (1 -> 001, 12 -> 012)
-  return "O" + num.toString().padStart(3, "0");
+  return generateNextId(order_db, "orderId", "O");
 }
 
 //add order
 const addNewOrderRecord = (order_id, order_date, customer_name, items, total_price) => {
-  console.log("from order modal: ",order_id, order_date, customer_name, items, total_price);
-
   let order = new OrderDTO(order_id, order_date, customer_name, items, total_price);
-  console.log(order);
 
   order_db.push(order);
+  persistDatabases();
 };
 
 //update order
@@ -38,12 +28,14 @@ const updateOrderRecord = (
 ) => {
   let order = new OrderDTO(order_id, order_date, customer_name, items, total_price);
   order_db[tbl_row] = order;
+  persistDatabases();
   return true;
 };
 
 //delete order
 const deleteOrderRecord = (index) => {
   order_db.splice(index, 1);
+  persistDatabases();
 };
 
 //get order

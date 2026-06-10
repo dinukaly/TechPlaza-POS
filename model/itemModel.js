@@ -1,28 +1,18 @@
 import ItemDTO from "../dto/itemDTO.js";
-import { item_db } from "../db/DB.js";
+import { item_db, persistDatabases } from "../db/DB.js";
+import { generateNextId } from "../assets/js/storageService.js";
 
 //generate item ID
 function generateItemId() {
-  if (item_db.length === 0) return "I001";
-
-  // Get last item ID
-  const lastId = item_db[item_db.length - 1].id;
-
-  // Extract the numeric part and increment
-  const num = parseInt(lastId.substring(1)) + 1;
-
-  // Pad with zeros (1 -> 001, 12 -> 012)
-  return "I" + num.toString().padStart(3, "0");
+  return generateNextId(item_db, "id", "I");
 }
 
 //add item
 const addNewItemRecord = (item_id, name, price, quantity, description, image) => {
-  console.log(item_id, name, price, quantity, description, image);
-
   let item = new ItemDTO(item_id, name, price, quantity, description, image);
-  console.log(item);
 
   item_db.push(item);
+  persistDatabases();
 };
 
 //update item
@@ -37,12 +27,14 @@ const updateItemRecord = (
 ) => {
   let item = new ItemDTO(item_id, name, price, quantity, description, image);
   item_db[tbl_row] = item;
+  persistDatabases();
   return true;
 };
 
 //delete item
 const deleteItemRecord = (index) => {
   item_db.splice(index, 1);
+  persistDatabases();
 };
 
 //get item
@@ -62,6 +54,19 @@ const searchItemRecord = (searchText) => {
   );
 };
 
+const decreaseItemQuantity = (itemId, quantityToSubtract) => {
+  const item = item_db.find((record) => record.id === itemId);
+
+  if (!item) {
+    return false;
+  }
+
+  const nextQuantity = Number(item.quantity || 0) - Number(quantityToSubtract || 0);
+  item.quantity = nextQuantity < 0 ? 0 : nextQuantity;
+  persistDatabases();
+  return true;
+};
+
 export {
   generateItemId,
   addNewItemRecord,
@@ -70,4 +75,5 @@ export {
   getItemRecord,
   getAllItems,
   searchItemRecord,
+  decreaseItemQuantity,
 };
